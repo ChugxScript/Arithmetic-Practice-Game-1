@@ -189,6 +189,7 @@ void GetLevel(){
     gotoxy(45,8);printf("%c",c);printf(" Level 3: Medium\n");
     gotoxy(45,9);printf("%c",c);printf(" Level 4: Hard\n");
     gotoxy(45,10);printf("%c",c);printf(" Level 5: Very Hard\n");
+    gotoxy(45,12);printf("Enter your choice: ");
     scanf("%d", &l);
     switch (l){
         case 1: level = 10;
