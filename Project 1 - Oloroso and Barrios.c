@@ -3,7 +3,7 @@ Made By Oloroso, Andrew R. and Barrios, Armand Angelo C.*/
 #include <stdio.h>
 #include <windows.h>
 #include <time.h>
-
+//stonks?
 //Functions definitions
 void TitleScreen();
 int menu();
