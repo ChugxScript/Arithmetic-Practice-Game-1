@@ -308,13 +308,3 @@ void multiplication (int n){
 void score(){
     gotoxy(90,2);printf("Score: %d/%d: %6.2f%%",counter,items,(float)counter/items*100);
 }
-
-void LuckyPick642(){
-    int i, num;
-    srand(time(NULL));
-    for (i=0;i<6;i++){
-        num = rand() % 42 + 1;
-        printf("%d.) %d\n",i+1,num);
-    }
-}
-//sample edit
