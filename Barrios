@@ -116,16 +116,16 @@ void verify(SREC pl){
         int l = locate(pl.name);
         if(l > -1){
             system("cls");
-            printf("Welcome back %s", pl.name);
-            system("\npause");
+            gotoxy(45,6);printf("Welcome back %s!", pl.name);
+            gotoxy(45,7);system("\npause");
 
         }else{
             marker++;
             PLAYER[marker]=pl;
             system("cls");
-            printf("A NEW CHALLENGER!");
-            printf("\nWelcome to...\n");
-            system("pause");
+            gotoxy(45,6);printf("A NEW CHALLENGER!");
+            gotoxy(45,7);printf("Welcome to...");
+            gotoxy(45,12);system("pause");
         }
     }
 }
@@ -181,17 +181,18 @@ void TitleScreen(){
 }
 
 void GetLevel(){
-    int l;
+    int l,c=254,t=175;
     system("cls");
-    printf("Select level\n");
-    printf("1\n");
-    printf("2\n");
-    printf("3\n");
-    printf("4\n");
-    printf("5\n");
+    gotoxy(45,5);printf("%c",t);printf(" Select level\n");
+    gotoxy(45,6);printf("%c",c);printf(" Level 1: Very Easy\n");
+    gotoxy(45,7);printf("%c",c);printf(" Level 2: Easy\n");
+    gotoxy(45,8);printf("%c",c);printf(" Level 3: Medium\n");
+    gotoxy(45,9);printf("%c",c);printf(" Level 4: Hard\n");
+    gotoxy(45,10);printf("%c",c);printf(" Level 5: Very Hard\n");
+    gotoxy(45,12);printf("Enter your choice: ");
     scanf("%d", &l);
     switch (l){
-        case 1: level = 10; 
+        case 1: level = 10;
                 items = 5; break;
         case 2: level = 20; break;
                 items = 10; break;
@@ -215,7 +216,7 @@ int menu(){
     gotoxy(42,11);printf("Press [4] for Multiplication");
     gotoxy(42,12);printf("Press [5] to Exit");
     gotoxy(40,14);printf("=================================");
-    gotoxy(40,16);printf("What operation you want to take? ");
+    gotoxy(40,16);printf("What operation do you want to take? ");
     scanf("%d", &num);
     return num;
 }
@@ -357,7 +358,6 @@ void multiplication (int n){
     int x,y,z,answer;
     do{
         counter = 0;
-        level = diff;
         for (x=0;x<n;x++){
             system("cls");
             //generate random numbers from 1 - level
