@@ -1,10 +1,26 @@
 /*Project 1 - Arithmetic Practice Game in C using Array of structures
 Made By Oloroso, Andrew R. and Barrios, Armand Angelo C.*/
 #include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <string.h>
 #include <windows.h>
 #include <time.h>
+#define MAX 50
+
+//Array Structure
+typedef struct studentRec{
+    int addition,subtraction,division,multiplication;
+    char name[69];
+    char pass[69];
+}SREC;
+SREC PLAYER[MAX];
 
 //Functions definitions
+void logIn(SREC *pl);
+void verify(SREC pl);
+int locate(char n[69]);
+void init();
 void TitleScreen();
 int menu();
 void GetItems();
@@ -13,6 +29,9 @@ void subtraction (int n);
 void division (int n);
 void multiplication (int n);
 void score();
+void save();
+void retrieve();
+void box();
 void gotoxy(int x,int y){
     COORD coord = {0,0};
     coord.X=x;
@@ -20,11 +39,17 @@ void gotoxy(int x,int y){
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
 }
 //Global Variables
-int items,counter,num;
+int items,counter,num,marker;
 char c;
 
 int main(){
+    SREC player;
     srand(time(NULL));
+    init();
+    retrieve();
+    logIn(&player);
+    verify(player);
+    system("cls");
     TitleScreen();
     while(1){
         switch(menu()){
@@ -40,7 +65,8 @@ int main(){
             case 4: GetItems();
                     multiplication(items);
                     break;
-            case 5: exit(0);
+            case 5: save();
+                    exit(0);
                     break;
             default:system("cls");
                     gotoxy(40,5);printf("Numbers 1-5 only.");
@@ -48,6 +74,69 @@ int main(){
                     break;
         }
     }
+}
+
+void init(){
+    marker = -1;
+}
+void box(){
+    int i;
+    int l = 186, ul=201,ur=187,w=205,dr=188,dl=200;
+    gotoxy(40,5);printf("%c", ul);
+    gotoxy(90,5);printf("%c", ur);
+    gotoxy(90,13);printf("%c", dr);
+    gotoxy(40,13);printf("%c", dl);
+    for (i=0;i<=6;i++){
+         gotoxy(40,6+i);printf("%c", l);
+         gotoxy(90,6+i);printf("%c", l);
+    }
+    for (i=0;i<49;i++){
+        gotoxy(41+i,5);printf("%c", w);
+        gotoxy(41+i,13);printf("%c", w);
+    }
+}
+
+void logIn(SREC *pl){
+    system("cls");
+    box();
+    gotoxy(45,6);printf("Enter Username/UserID: ");
+    scanf(" %[^\n]s", pl->name);
+    gotoxy(45,7);printf("Enter Password: ");
+    scanf(" %[^\n]s", pl->pass);
+}
+
+void verify(SREC pl){
+    int x,p;
+    //check if array is full
+    if (marker == MAX-1){
+        printf("Array is Full");
+        system("\npause");
+    }
+    //get record
+    else{
+        //check if name is already in the list
+        int l = locate(pl.name);
+        if(l > -1){
+            system("cls");
+            printf("Welcome back %s", pl.name);
+            system("\npause");
+
+        }else{
+            marker++;
+            PLAYER[marker]=pl;
+            system("cls");
+            printf("A NEW CHALLENGER!");
+            printf("\nWelcome to...\n");
+            system("pause");
+        }
+    }
+}
+
+int locate(char n[69]){
+    for(int x=0;x<=marker;x++)
+        if (strcmp(n,PLAYER[x].name)==0)
+            return x;
+    return -1;
 }
 
 void TitleScreen(){
@@ -90,12 +179,13 @@ void TitleScreen(){
         system("COLOR 0A");
     }
     gotoxy(40,25);system("pause");
+    system("cls");
 }
 
-void GetItems(int *n){
+void GetItems(){
     system("cls");
     gotoxy(40,5);printf("How many items? ");
-    scanf("%d", &n);
+    scanf("%d", &items);
 }
 
 int menu(){
@@ -135,7 +225,7 @@ void addition (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        if (counter >= (float)n/2){
+        if (counter == n){
         //the random random number will increase for the level of difficulty
         diff = level + 10;
         gotoxy(47,5);printf("YOU ARE NOW LEVEL UP!");
@@ -307,4 +397,37 @@ void multiplication (int n){
 
 void score(){
     gotoxy(90,2);printf("Score: %d/%d: %6.2f%%",counter,items,(float)counter/items*100);
+}
+
+void save(){
+    FILE *fp;
+    int x;
+    fp = fopen("BSCS-1CD-Leaderboard.txt","w+");
+    if (fp==NULL){
+        printf("Error 404. File not found.\n");
+        system("pause");
+    }
+    else {
+        for (x=0;x<=marker;x++)
+            fprintf(fp, "%s\t%d\t%d\t%d\t%d\n",PLAYER[x].name,PLAYER[x].addition,PLAYER[x].subtraction,PLAYER[x].division,PLAYER[x].multiplication);
+        fclose(fp);
+      }
+}
+
+void retrieve(){
+    FILE *fp;
+    SREC players;
+    fp = fopen("BSCS-1CD-Leaderboard.txt","r+");
+    if (fp==NULL){
+        printf("Error 404.\nBSCS-1CD-Leaderboard.txt File not found.\n");
+        system("pause");
+    }
+    else {
+        while (!feof(fp)){
+            fscanf(fp," %[^\t]s",players.name);
+            fscanf(fp,"%d %d %d %d\n", &players.addition,&players.subtraction,&players.division,&players.multiplication);
+            verify(players);
+        }
+        fclose(fp);
+   }
 }
