@@ -238,6 +238,7 @@ void addition (int n){
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
             if(c == 'n' || c == 'N'){
+                    save();
                     exit(0);
                 }
             if(c == 'y' || c == 'Y'){
@@ -292,6 +293,7 @@ void subtraction (int n){
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
             if(c == 'n' || c == 'N'){
+                    save();
                     exit(0);
                 }
             if(c == 'y' || c == 'Y'){
@@ -340,6 +342,7 @@ void division (int n){
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
             if(c == 'n' || c == 'N'){
+                    save();
                     exit(0);
                 }
             if(c == 'y' || c == 'Y'){
@@ -385,6 +388,7 @@ void multiplication (int n){
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
             if(c == 'n' || c == 'N'){
+                    save();
                     exit(0);
                 }
             if(c == 'y' || c == 'Y'){
