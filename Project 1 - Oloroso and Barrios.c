@@ -7,7 +7,7 @@ Made By Oloroso, Andrew R. and Barrios, Armand Angelo C.*/
 //Functions definitions
 void TitleScreen();
 int menu();
-void GetItems(int *n);
+void GetItems();
 void addition (int n);
 void subtraction (int n);
 void division (int n);
@@ -28,22 +28,16 @@ int main(){
     TitleScreen();
     while(1){
         switch(menu()){
-            case 1: GetItems(&items);
+            case 1: GetItems();
                     addition(items);
                     break;
-            case 2: system("cls");
-                    gotoxy(40,5);printf("How many items? ");
-                    scanf("%d", &items);
+            case 2: GetItems();
                     subtraction(items);
                     break;
-            case 3: system("cls");
-                    gotoxy(40,5);printf("How many items? ");
-                    scanf("%d", &items);
+            case 3: GetItems();
                     division(items);
                     break;
-            case 4: system("cls");
-                    gotoxy(40,5);printf("How many items? ");
-                    scanf("%d", &items);
+            case 4: GetItems();
                     multiplication(items);
                     break;
             case 5: exit(0);
