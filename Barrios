@@ -9,7 +9,7 @@ Made By Oloroso, Andrew R. and Barrios, Armand Angelo C.*/
 #define MAX 50
 
 //Array Structure
-typedef struct studentRec{
+typedef struct playerRec{
     int addition,subtraction,division,multiplication;
     char name[69];
     char pass[69];
@@ -23,7 +23,7 @@ int locate(char n[69]);
 void init();
 void TitleScreen();
 int menu();
-void GetItems();
+void GetLevel();
 void addition (int n);
 void subtraction (int n);
 void division (int n);
@@ -39,7 +39,7 @@ void gotoxy(int x,int y){
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
 }
 //Global Variables
-int items,counter,num,marker;
+int items,counter,num,marker,level;
 char c;
 
 int main(){
@@ -53,16 +53,16 @@ int main(){
     TitleScreen();
     while(1){
         switch(menu()){
-            case 1: GetItems();
+            case 1: GetLevel();
                     addition(items);
                     break;
-            case 2: GetItems();
+            case 2: GetLevel();
                     subtraction(items);
                     break;
-            case 3: GetItems();
+            case 3: GetLevel();
                     division(items);
                     break;
-            case 4: GetItems();
+            case 4: GetLevel();
                     multiplication(items);
                     break;
             case 5: save();
@@ -109,24 +109,22 @@ void verify(SREC pl){
     int x,p;
     //check if array is full
     if (marker == MAX-1){
-        gotoxy(45,6);printf("Array is Full");
+        printf("Array is Full");
         system("\npause");
-    }
-    //get record
-    else{
+    }else{
         //check if name is already in the list
         int l = locate(pl.name);
         if(l > -1){
             system("cls");
-            gotoxy(45,8);printf("Welcome back %s", pl.name);
+            printf("Welcome back %s", pl.name);
             system("\npause");
 
         }else{
             marker++;
             PLAYER[marker]=pl;
             system("cls");
-            gotoxy(45,8);printf("A NEW CHALLENGER!");
-            gotoxy(45,9);printf("\nWelcome to...\n");
+            printf("A NEW CHALLENGER!");
+            printf("\nWelcome to...\n");
             system("pause");
         }
     }
@@ -182,10 +180,29 @@ void TitleScreen(){
     system("cls");
 }
 
-void GetItems(){
+void GetLevel(){
+    int l;
     system("cls");
-    gotoxy(40,5);printf("How many items? ");
-    scanf("%d", &items);
+    printf("Select level\n");
+    printf("1\n");
+    printf("2\n");
+    printf("3\n");
+    printf("4\n");
+    printf("5\n");
+    scanf("%d", &l);
+    switch (l){
+        case 1: level = 10; 
+                items = 5; break;
+        case 2: level = 20; break;
+                items = 10; break;
+        case 3: level = 50; break;
+                items = 10; break;
+        case 4: level = 80; break;
+                items = 15; break;
+        case 5: level = 100; break;
+                items = 15; break;
+        default: printf("1-5 only"); break;
+    }
 }
 
 int menu(){
@@ -204,10 +221,9 @@ int menu(){
 }
 
 void addition (int n){
-    int x,y,z,answer,level,diff=5;
+    int x,y,z,answer;
     do{
         counter = 0;
-        level = diff;
         for (x=0;x<n;x++){
             system("cls");
             //generate random numbers from 1 - level
@@ -225,11 +241,7 @@ void addition (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        if (counter == n){
-        //the random random number will increase for the level of difficulty
-        diff = level + 10;
-        gotoxy(47,5);printf("YOU ARE NOW LEVEL UP!");
-        }
+        PLAYER->addition = counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -242,7 +254,7 @@ void addition (int n){
                     exit(0);
                 }
             if(c == 'y' || c == 'Y'){
-                    return main();
+                    return menu();
                 }
                 getch();
             }
@@ -250,10 +262,9 @@ void addition (int n){
 }
 
 void subtraction (int n){
-    int x,y,z,answer,temp,level,diff=5;
+    int x,y,z,answer,temp;
     do{
         counter = 0;
-        level = diff;
         for (x=0;x<n;x++){
             system("cls");
             //generate random numbers from 1 - level
@@ -280,11 +291,6 @@ void subtraction (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        if (counter >= (float)n/2){
-        //the random random number will increase for the level of difficulty
-        diff = level + 10;
-        gotoxy(47,5);printf("YOU ARE NOW LEVEL UP!");
-        }
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -297,7 +303,7 @@ void subtraction (int n){
                     exit(0);
                 }
             if(c == 'y' || c == 'Y'){
-                    return main();
+                    return menu();
                 }
                 getch();
             }
@@ -305,10 +311,9 @@ void subtraction (int n){
 }
 
 void division (int n){
-    int x,y,z,answer,temp,level,diff=2;
+    int x,y,z,answer,temp;
     do{
         counter = 0;
-        level = diff;
         for (x=0;x<n;x++){
             system("cls");
             //generate random numbers from 1 - level
@@ -329,11 +334,6 @@ void division (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        if (counter >= (float)n/2){
-        //the random random number will increase for the level of difficulty
-        diff = level + 10;
-        gotoxy(47,5);printf("YOU ARE NOW LEVEL UP!");
-        }
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -346,7 +346,7 @@ void division (int n){
                     exit(0);
                 }
             if(c == 'y' || c == 'Y'){
-                    return main();
+                    return menu();
                 }
                 getch();
             }
@@ -354,7 +354,7 @@ void division (int n){
 }
 
 void multiplication (int n){
-    int x,y,z,answer,level,diff=5;
+    int x,y,z,answer;
     do{
         counter = 0;
         level = diff;
@@ -375,11 +375,6 @@ void multiplication (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        if (counter >= (float)n/2){
-        //the random random number will increase for the level of difficulty
-        diff = level + 10;
-        gotoxy(47,5);printf("YOU ARE NOW LEVEL UP!");
-        }
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -392,7 +387,7 @@ void multiplication (int n){
                     exit(0);
                 }
             if(c == 'y' || c == 'Y'){
-                    return main();
+                    return menu();
                 }
                 getch();
             }
@@ -413,7 +408,7 @@ void save(){
     }
     else {
         for (x=0;x<=marker;x++)
-            fprintf(fp, "%s\t%d\t%d\t%d\t%d\n",PLAYER[x].name,PLAYER[x].addition,PLAYER[x].subtraction,PLAYER[x].division,PLAYER[x].multiplication);
+            fprintf(fp, "%s\t%d %d %d %d\n",PLAYER[x].name,PLAYER[x].addition,&PLAYER[x].subtraction,&PLAYER[x].division,&PLAYER[x].multiplication);
         fclose(fp);
       }
 }
