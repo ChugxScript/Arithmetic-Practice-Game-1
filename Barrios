@@ -109,7 +109,7 @@ void verify(SREC pl){
     int x,p;
     //check if array is full
     if (marker == MAX-1){
-        printf("Array is Full");
+        gotoxy(45,6);printf("Array is Full");
         system("\npause");
     }
     //get record
@@ -118,15 +118,15 @@ void verify(SREC pl){
         int l = locate(pl.name);
         if(l > -1){
             system("cls");
-            printf("Welcome back %s", pl.name);
+            gotoxy(45,8);printf("Welcome back %s", pl.name);
             system("\npause");
 
         }else{
             marker++;
             PLAYER[marker]=pl;
             system("cls");
-            printf("A NEW CHALLENGER!");
-            printf("\nWelcome to...\n");
+            gotoxy(45,8);printf("A NEW CHALLENGER!");
+            gotoxy(45,9);printf("\nWelcome to...\n");
             system("pause");
         }
     }
