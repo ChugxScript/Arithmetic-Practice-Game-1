@@ -357,7 +357,6 @@ void multiplication (int n){
     int x,y,z,answer;
     do{
         counter = 0;
-        level = diff;
         for (x=0;x<n;x++){
             system("cls");
             //generate random numbers from 1 - level
