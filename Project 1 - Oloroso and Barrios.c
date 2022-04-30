@@ -47,7 +47,6 @@ int main(){
     init();
     retrieve();
     logIn();
-    //verify(player);
     system("cls");
     TitleScreen();
     while(1){
