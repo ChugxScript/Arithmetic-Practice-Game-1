@@ -10,15 +10,15 @@ Made By Oloroso, Andrew R. and Barrios, Armand Angelo C.*/
 
 //Array Structure
 typedef struct playerRec{
-    int addition,subtraction,division,multiplication;
+    int plus,minus,divide,multiply;
     char name[69];
     char pass[69];
 }SREC;
 SREC PLAYER[MAX];
 
 //Functions definitions
-void logIn(SREC *pl);
-void verify(SREC pl);
+void logIn();
+void AddRec(SREC pl);
 int locate(char n[69]);
 void init();
 void TitleScreen();
@@ -43,12 +43,11 @@ int items,counter,num,marker,level;
 char c;
 
 int main(){
-    SREC player;
     srand(time(NULL));
     init();
     retrieve();
-    logIn(&player);
-    verify(player);
+    logIn();
+    //verify(player);
     system("cls");
     TitleScreen();
     while(1){
@@ -96,37 +95,51 @@ void box(){
     }
 }
 
-void logIn(SREC *pl){
+void logIn(){
+    SREC player;
     system("cls");
     box();
     gotoxy(45,6);printf("Enter Username/UserID: ");
-    scanf(" %[^\n]s", pl->name);
-    gotoxy(45,7);printf("Enter Password: ");
-    scanf(" %[^\n]s", pl->pass);
+    scanf(" %[^\n]s", player.name);
+    //check if name is already in the list
+    int l = locate(player.name);
+    if(l > -1){
+            here:
+            system("cls");
+            box();
+            gotoxy(45,6);printf("Welcome back %s!", player.name);
+            gotoxy(45,7);printf("Enter Password: ");
+            scanf(" %[^\n]s", player.pass);
+            for(int x=0;x<=marker;x++){
+                if (strcmp(player.pass,PLAYER[x].pass)==0){
+                    gotoxy(45,9);system("pause");
+                }else{
+                    gotoxy(45,9);printf("Wrong password.");
+                    gotoxy(45,11);system("pause");
+                    goto here;
+                }
+            }
+        }else{
+            marker++;
+            strcpy (PLAYER[marker].name,player.name);
+            system("cls");
+            box();
+            gotoxy(45,6);printf("A NEW CHALLENGER!");
+            gotoxy(45,7);printf("Enter Password: ");
+            scanf(" %[^\n]s", player.pass);
+            strcpy (PLAYER[marker].pass,player.pass);
+            gotoxy(45,12);system("pause");
+        }
 }
 
-void verify(SREC pl){
-    int x,p;
+void AddRec(SREC pl){
     //check if array is full
     if (marker == MAX-1){
         printf("Array is Full");
         system("\npause");
     }else{
-        //check if name is already in the list
-        int l = locate(pl.name);
-        if(l > -1){
-            system("cls");
-            gotoxy(45,6);printf("Welcome back %s!", pl.name);
-            gotoxy(45,7);system("\npause");
-
-        }else{
-            marker++;
-            PLAYER[marker]=pl;
-            system("cls");
-            gotoxy(45,6);printf("A NEW CHALLENGER!");
-            gotoxy(45,7);printf("Welcome to...");
-            gotoxy(45,12);system("pause");
-        }
+        marker++;
+        PLAYER[marker]=pl;
     }
 }
 
@@ -242,7 +255,8 @@ void addition (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        PLAYER->addition = counter;
+        //will add past score to the new score
+        PLAYER[marker].plus += counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -253,11 +267,9 @@ void addition (int n){
             if(c == 'n' || c == 'N'){
                     save();
                     exit(0);
-                }
-            if(c == 'y' || c == 'Y'){
+                }else{
                     return menu();
                 }
-                getch();
             }
     }while(c == 'y' || c == 'Y');
 }
@@ -292,6 +304,8 @@ void subtraction (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
+        //will add past score to the new score
+        PLAYER[marker].minus += counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -335,6 +349,8 @@ void division (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
+        //will add past score to the new score
+        PLAYER[marker].divide += counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -375,6 +391,8 @@ void multiplication (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
+        //will add past score to the new score
+        PLAYER[marker].multiply += counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -408,7 +426,7 @@ void save(){
     }
     else {
         for (x=0;x<=marker;x++)
-            fprintf(fp, "%s\t%d %d %d %d\n",PLAYER[x].name,PLAYER[x].addition,&PLAYER[x].subtraction,&PLAYER[x].division,&PLAYER[x].multiplication);
+            fprintf(fp, "%s\t%s\t%d %d %d %d\n",PLAYER[x].name,PLAYER[x].pass,PLAYER[x].plus,PLAYER[x].minus,PLAYER[x].divide,PLAYER[x].multiply);
         fclose(fp);
       }
 }
@@ -424,8 +442,9 @@ void retrieve(){
     else {
         while (!feof(fp)){
             fscanf(fp," %[^\t]s",players.name);
-            fscanf(fp,"%d %d %d %d\n", &players.addition,&players.subtraction,&players.division,&players.multiplication);
-            verify(players);
+            fscanf(fp," %[^\t]s",players.pass);
+            fscanf(fp,"%d %d %d %d\n", &players.plus,&players.minus,&players.divide,&players.multiply);
+            AddRec(players);
         }
         fclose(fp);
    }
