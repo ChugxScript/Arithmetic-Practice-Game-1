@@ -78,9 +78,9 @@ void leaderboard(){
     int i,j;
     system("cls");
     gotoxy(40,5);printf("Leaderboards");
-    gotoxy(40,6);printf("\tAddition");
+    gotoxy(40,6);printf("Username\tAddition");
     for(i=0;i<=marker;i++){
-        gotoxy(37,7+i);printf("%d. %s %6.2f%%",i+1,PLAYER[marker].name,PLAYER[marker].lead_plus);
+        gotoxy(38,7+i);printf("%d.%s\t\t %6.2f%%",i+1,PLAYER[marker].name,PLAYER[marker].lead_plus);
     }
     gotoxy(40,18);system("pause");
     system("cls");
@@ -407,7 +407,7 @@ void save(){
     }
     else {
         for (x=0;x<=marker;x++)
-            fprintf(fp, "%s\t%s\t%d %d %d %d\n",PLAYER[x].name,PLAYER[x].pass,PLAYER[x].plus,PLAYER[x].minus,PLAYER[x].divide,PLAYER[x].multiply);
+            fprintf(fp, "%s\t%s\t%d %d %d %d %6.2f\n",PLAYER[x].name,PLAYER[x].pass,PLAYER[x].plus,PLAYER[x].minus,PLAYER[x].divide,PLAYER[x].multiply,PLAYER[x].lead_plus);
         fclose(fp);
       }
 }
@@ -424,7 +424,7 @@ void retrieve(){
         while (!feof(fp)){
             fscanf(fp," %[^\t]s",players.name);
             fscanf(fp," %[^\t]s",players.pass);
-            fscanf(fp,"%d %d %d %d\n", &players.plus,&players.minus,&players.divide,&players.multiply);
+            fscanf(fp,"%d %d %d %d %f\n", &players.plus,&players.minus,&players.divide,&players.multiply,&players.lead_plus);
             AddRec(players);
         }
         fclose(fp);
