@@ -39,7 +39,7 @@ void gotoxy(int x,int y){
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
 }
 //Global Variables
-int items,counter,num,marker,level;
+int items=10,counter,num,marker,level=10;
 char c;
 
 int main(){
@@ -51,17 +51,13 @@ int main(){
     TitleScreen();
     while(1){
         switch(menu()){
-            case 1: GetLevel();
-                    addition(items);
+            case 1: addition(items);
                     break;
-            case 2: GetLevel();
-                    subtraction(items);
+            case 2: subtraction(items);
                     break;
-            case 3: GetLevel();
-                    division(items);
+            case 3: division(items);
                     break;
-            case 4: GetLevel();
-                    multiplication(items);
+            case 4: multiplication(items);
                     break;
             case 5: save();
                     exit(0);
@@ -190,32 +186,6 @@ void TitleScreen(){
     }
     gotoxy(40,25);system("pause");
     system("cls");
-}
-
-void GetLevel(){
-    int l,c=254,t=175;
-    system("cls");
-    gotoxy(45,5);printf("%c",t);printf(" Select level\n");
-    gotoxy(45,6);printf("%c",c);printf(" Level 1: Very Easy\n");
-    gotoxy(45,7);printf("%c",c);printf(" Level 2: Easy\n");
-    gotoxy(45,8);printf("%c",c);printf(" Level 3: Medium\n");
-    gotoxy(45,9);printf("%c",c);printf(" Level 4: Hard\n");
-    gotoxy(45,10);printf("%c",c);printf(" Level 5: Very Hard\n");
-    gotoxy(45,12);printf("Enter your choice: ");
-    scanf("%d", &l);
-    switch (l){
-        case 1: level = 10;
-                items = 5; break;
-        case 2: level = 20; break;
-                items = 10; break;
-        case 3: level = 50; break;
-                items = 10; break;
-        case 4: level = 80; break;
-                items = 15; break;
-        case 5: level = 100; break;
-                items = 15; break;
-        default: printf("1-5 only"); break;
-    }
 }
 
 int menu(){
