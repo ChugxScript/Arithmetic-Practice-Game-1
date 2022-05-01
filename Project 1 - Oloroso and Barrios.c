@@ -32,6 +32,7 @@ void score();
 void save();
 void retrieve();
 void box();
+void leaderboard();
 void gotoxy(int x,int y){
     COORD coord = {0,0};
     coord.X=x;
@@ -49,6 +50,7 @@ int main(){
     logIn();
     system("cls");
     TitleScreen();
+    leaderboard();
     while(1){
         switch(menu()){
             case 1: addition(items);
@@ -59,7 +61,8 @@ int main(){
                     break;
             case 4: multiplication(items);
                     break;
-            case 5: save();
+            case 5: leaderboard();
+                    save();
                     exit(0);
                     break;
             default:system("cls");
@@ -70,6 +73,17 @@ int main(){
     }
 }
 
+void leaderboard(){
+    int i;
+    system("cls");
+    gotoxy(40,5);printf("Leaderboards");
+    gotoxy(40,6);printf("Addition\tSubtraction\tDivision\tMultiplication");
+    for(i=0;i<=9;i++){
+        gotoxy(37,7+i);printf("%d.)",i+1);
+    }
+    gotoxy(40,18);system("pause");
+    system("cls");
+}
 void init(){
     marker = -1;
 }
@@ -234,6 +248,7 @@ void addition (int n){
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
             if(c == 'n' || c == 'N'){
+                    leaderboard();
                     save();
                     exit(0);
                 }else{
@@ -283,6 +298,7 @@ void subtraction (int n){
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
             if(c == 'n' || c == 'N'){
+                    leaderboard();
                     save();
                     exit(0);
                 }
@@ -328,6 +344,7 @@ void division (int n){
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
             if(c == 'n' || c == 'N'){
+                    leaderboard();
                     save();
                     exit(0);
                 }
@@ -370,6 +387,7 @@ void multiplication (int n){
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
             if(c == 'n' || c == 'N'){
+                    leaderboard();
                     save();
                     exit(0);
                 }
