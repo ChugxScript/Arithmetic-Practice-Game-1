@@ -10,15 +10,16 @@ Made By Oloroso, Andrew R. and Barrios, Armand Angelo C.*/
 
 //Array Structure
 typedef struct playerRec{
-    int addition,subtraction,division,multiplication;
+    int plus,minus,divide,multiply;
     char name[69];
     char pass[69];
+    float lead_plus;
 }SREC;
 SREC PLAYER[MAX];
 
 //Functions definitions
-void logIn(SREC *pl);
-void verify(SREC pl);
+void logIn();
+void AddRec(SREC pl);
 int locate(char n[69]);
 void init();
 void TitleScreen();
@@ -32,6 +33,7 @@ void score();
 void save();
 void retrieve();
 void box();
+void leaderboard();
 void gotoxy(int x,int y){
     COORD coord = {0,0};
     coord.X=x;
@@ -39,33 +41,29 @@ void gotoxy(int x,int y){
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
 }
 //Global Variables
-int items,counter,num,marker,level;
+int items=10,counter,num,marker,level=10;
 char c;
 
 int main(){
-    SREC player;
     srand(time(NULL));
     init();
     retrieve();
-    logIn(&player);
-    verify(player);
+    logIn();
     system("cls");
     TitleScreen();
+    leaderboard();
     while(1){
         switch(menu()){
-            case 1: GetLevel();
-                    addition(items);
+            case 1: addition(items);
                     break;
-            case 2: GetLevel();
-                    subtraction(items);
+            case 2: subtraction(items);
                     break;
-            case 3: GetLevel();
-                    division(items);
+            case 3: division(items);
                     break;
-            case 4: GetLevel();
-                    multiplication(items);
+            case 4: multiplication(items);
                     break;
-            case 5: save();
+            case 5: leaderboard();
+                    save();
                     exit(0);
                     break;
             default:system("cls");
@@ -76,6 +74,17 @@ int main(){
     }
 }
 
+void leaderboard(){
+    int i,j;
+    system("cls");
+    gotoxy(40,5);printf("Leaderboards");
+    gotoxy(40,6);printf("\tAddition");
+    for(i=0;i<=marker;i++){
+        gotoxy(37,7+i);printf("%d. %s %6.2f%%",i+1,PLAYER[marker].name,PLAYER[marker].lead_plus);
+    }
+    gotoxy(40,18);system("pause");
+    system("cls");
+}
 void init(){
     marker = -1;
 }
@@ -96,37 +105,51 @@ void box(){
     }
 }
 
-void logIn(SREC *pl){
+void logIn(){
+    SREC player;
     system("cls");
     box();
     gotoxy(45,6);printf("Enter Username/UserID: ");
-    scanf(" %[^\n]s", pl->name);
-    gotoxy(45,7);printf("Enter Password: ");
-    scanf(" %[^\n]s", pl->pass);
+    scanf(" %[^\n]s", player.name);
+    //check if name is already in the list
+    int l = locate(player.name);
+    if(l > -1){
+            here:
+            system("cls");
+            box();
+            gotoxy(45,6);printf("Welcome back %s!", player.name);
+            gotoxy(45,7);printf("Enter Password: ");
+            scanf(" %[^\n]s", player.pass);
+            for(int x=0;x<=marker;x++){
+                if (strcmp(player.pass,PLAYER[x].pass)==0){
+                    gotoxy(45,9);system("pause");
+                }else{
+                    gotoxy(45,9);printf("Wrong password.");
+                    gotoxy(45,11);system("pause");
+                    goto here;
+                }
+            }
+        }else{
+            marker++;
+            strcpy (PLAYER[marker].name,player.name);
+            system("cls");
+            box();
+            gotoxy(45,6);printf("A NEW CHALLENGER!");
+            gotoxy(45,7);printf("Enter Password: ");
+            scanf(" %[^\n]s", player.pass);
+            strcpy (PLAYER[marker].pass,player.pass);
+            gotoxy(45,12);system("pause");
+        }
 }
 
-void verify(SREC pl){
-    int x,p;
+void AddRec(SREC pl){
     //check if array is full
     if (marker == MAX-1){
         printf("Array is Full");
         system("\npause");
     }else{
-        //check if name is already in the list
-        int l = locate(pl.name);
-        if(l > -1){
-            system("cls");
-            gotoxy(45,6);printf("Welcome back %s!", pl.name);
-            gotoxy(45,7);system("\npause");
-
-        }else{
-            marker++;
-            PLAYER[marker]=pl;
-            system("cls");
-            gotoxy(45,6);printf("A NEW CHALLENGER!");
-            gotoxy(45,7);printf("Welcome to...");
-            gotoxy(45,12);system("pause");
-        }
+        marker++;
+        PLAYER[marker]=pl;
     }
 }
 
@@ -180,32 +203,6 @@ void TitleScreen(){
     system("cls");
 }
 
-void GetLevel(){
-    int l,c=254,t=175;
-    system("cls");
-    gotoxy(45,5);printf("%c",t);printf(" Select level\n");
-    gotoxy(45,6);printf("%c",c);printf(" Level 1: Very Easy\n");
-    gotoxy(45,7);printf("%c",c);printf(" Level 2: Easy\n");
-    gotoxy(45,8);printf("%c",c);printf(" Level 3: Medium\n");
-    gotoxy(45,9);printf("%c",c);printf(" Level 4: Hard\n");
-    gotoxy(45,10);printf("%c",c);printf(" Level 5: Very Hard\n");
-    gotoxy(45,12);printf("Enter your choice: ");
-    scanf("%d", &l);
-    switch (l){
-        case 1: level = 10;
-                items = 5; break;
-        case 2: level = 20; break;
-                items = 10; break;
-        case 3: level = 50; break;
-                items = 10; break;
-        case 4: level = 80; break;
-                items = 15; break;
-        case 5: level = 100; break;
-                items = 15; break;
-        default: printf("1-5 only"); break;
-    }
-}
-
 int menu(){
     system("cls");
     gotoxy(45,3);printf("Arithmetic Practice Game");
@@ -242,7 +239,7 @@ void addition (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        PLAYER->addition = counter;
+        PLAYER[marker].lead_plus=(float)counter/items*100;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -251,13 +248,12 @@ void addition (int n){
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
             if(c == 'n' || c == 'N'){
+                    leaderboard();
                     save();
                     exit(0);
-                }
-            if(c == 'y' || c == 'Y'){
+                }else{
                     return menu();
                 }
-                getch();
             }
     }while(c == 'y' || c == 'Y');
 }
@@ -300,6 +296,7 @@ void subtraction (int n){
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
             if(c == 'n' || c == 'N'){
+                    leaderboard();
                     save();
                     exit(0);
                 }
@@ -343,6 +340,7 @@ void division (int n){
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
             if(c == 'n' || c == 'N'){
+                    leaderboard();
                     save();
                     exit(0);
                 }
@@ -383,6 +381,7 @@ void multiplication (int n){
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
             if(c == 'n' || c == 'N'){
+                    leaderboard();
                     save();
                     exit(0);
                 }
@@ -408,7 +407,7 @@ void save(){
     }
     else {
         for (x=0;x<=marker;x++)
-            fprintf(fp, "%s\t%d %d %d %d\n",PLAYER[x].name,PLAYER[x].addition,&PLAYER[x].subtraction,&PLAYER[x].division,&PLAYER[x].multiplication);
+            fprintf(fp, "%s\t%s\t%d %d %d %d\n",PLAYER[x].name,PLAYER[x].pass,PLAYER[x].plus,PLAYER[x].minus,PLAYER[x].divide,PLAYER[x].multiply);
         fclose(fp);
       }
 }
@@ -424,8 +423,9 @@ void retrieve(){
     else {
         while (!feof(fp)){
             fscanf(fp," %[^\t]s",players.name);
-            fscanf(fp,"%d %d %d %d\n", &players.addition,&players.subtraction,&players.division,&players.multiplication);
-            verify(players);
+            fscanf(fp," %[^\t]s",players.pass);
+            fscanf(fp,"%d %d %d %d\n", &players.plus,&players.minus,&players.divide,&players.multiply);
+            AddRec(players);
         }
         fclose(fp);
    }
