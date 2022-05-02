@@ -87,6 +87,7 @@ void leaderboard(){
         PLAYER[i].ave = (PLAYER[i].plus + PLAYER[i].minus + PLAYER[i].divide + PLAYER[i].multiply) / 4.0;
     }
     gotoxy(40,5);printf("Leaderboards");
+    gotoxy(40,5);printf("Score at least 1 point to qualify in the leaderboards.");
     AllLead();
     AddLead();
     SubLead();
