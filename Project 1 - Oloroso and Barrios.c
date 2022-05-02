@@ -140,7 +140,7 @@ void SubLead(){
         }
     }
     for(int z=0;z<=marker;z++){
-        printf("%s\t%d\n",PLAYER[z].name,PLAYER[z].minus);
+        printf("%s\t%d\t%6.2f%%\n",PLAYER[z].name,PLAYER[z].minus,(float)PLAYER[z].minus/items*100);
     }
 }
 void DivLead(){
@@ -156,7 +156,7 @@ void DivLead(){
         }
     }
     for(int z=0;z<=marker;z++){
-        printf("%s\t%d\n",PLAYER[z].name,PLAYER[z].divide);
+        printf("%s\t%d\t%6.2f%%\n",PLAYER[z].name,PLAYER[z].divide,(float)PLAYER[z].divide/items*100);
     }
 }
 void MulLead(){
@@ -172,7 +172,7 @@ void MulLead(){
         }
     }
     for(int z=0;z<=marker;z++){
-        printf("%s\t%d\n",PLAYER[z].name,PLAYER[z].multiply);
+        printf("%s\t%d\t%6.2f%%\n",PLAYER[z].name,PLAYER[z].multiply,(float)PLAYER[z].multiply/items*100);
     }
 }
 
@@ -331,8 +331,7 @@ void addition (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        //will add past score to the new score
-        PLAYER[marker].plus += counter;
+        PLAYER[marker].plus = counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -381,8 +380,7 @@ void subtraction (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        //will add past score to the new score
-        PLAYER[marker].minus += counter;
+        PLAYER[marker].minus = counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -427,8 +425,7 @@ void division (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        //will add past score to the new score
-        PLAYER[marker].divide += counter;
+        PLAYER[marker].divide = counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -470,8 +467,7 @@ void multiplication (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        //will add past score to the new score
-        PLAYER[marker].multiply += counter;
+        PLAYER[marker].multiply = counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
