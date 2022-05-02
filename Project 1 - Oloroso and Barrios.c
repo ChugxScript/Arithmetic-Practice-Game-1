@@ -11,6 +11,7 @@ Made By Oloroso, Andrew R. and Barrios, Armand Angelo C.*/
 //Array Structure
 typedef struct playerRec{
     int plus,minus,divide,multiply;
+    float ave;
     char name[69];
     char pass[69];
 }SREC;
@@ -81,8 +82,11 @@ int main(){
 void leaderboard(){
     int i;
     system("cls");
+    for (i=0;i<=marker;i++){
+        PLAYER[i].ave = (PLAYER[i].plus + PLAYER[i].minus + PLAYER[i].divide + PLAYER[i].multiply) / 4.0;
+    }
     gotoxy(40,5);printf("Leaderboards");
-    //AllLead();
+    AllLead();
     AddLead();
     SubLead();
     DivLead();
@@ -91,10 +95,22 @@ void leaderboard(){
     system("cls");
 }
 
-/*void AllLead(){
-    printf("Over All Ranking");
-
-}*/
+void AllLead(){
+    SREC temp;
+    printf("\nOver All Ranking\n");
+    for(int x=0;x<=marker;x++){
+        for(int y=0;y<marker;y++){
+            if (PLAYER[y].ave < PLAYER[y+1].ave){
+            temp = PLAYER[y];
+            PLAYER[y] = PLAYER[y+1];
+            PLAYER[y+1] = temp;
+            }
+        }
+    }
+    for(int z=0;z<=marker;z++){
+        printf("%s\t%6.2f\n",PLAYER[z].name,PLAYER[z].ave);
+    }
+}
 void AddLead(){
     SREC temp;
     printf("\nAddition\n");
@@ -108,7 +124,7 @@ void AddLead(){
         }
     }
     for(int z=0;z<=marker;z++){
-        printf("%s\t%d\n",PLAYER[z].name,PLAYER[z].plus);
+        printf("%s\t%d\t%6.2f%%\n",PLAYER[z].name,PLAYER[z].plus,(float)PLAYER[z].plus/items*100);
     }
 }
 void SubLead(){
