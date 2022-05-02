@@ -14,6 +14,7 @@ typedef struct playerRec{
     float ave;
     char name[69];
     char pass[69];
+    int flag;
 }SREC;
 SREC PLAYER[MAX];
 
@@ -46,7 +47,7 @@ void gotoxy(int x,int y){
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
 }
 //Global Variables
-int items=10,counter,num,marker,level=10;
+int items=10,counter,num,marker;
 char c;
 
 int main(){
@@ -108,7 +109,12 @@ void AllLead(){
         }
     }
     for(int z=0;z<=marker;z++){
+        if(PLAYER[z].plus == NULL || PLAYER[z].minus==NULL||PLAYER[z].multiply==NULL||PLAYER[z].divide==NULL){
+            printf("DATA UNAVAILABLE.");
+        }
+        else{
         printf("%s\t%6.2f\n",PLAYER[z].name,PLAYER[z].ave);
+        }
     }
 }
 void AddLead(){
@@ -124,7 +130,12 @@ void AddLead(){
         }
     }
     for(int z=0;z<=marker;z++){
+        if(PLAYER[z].plus==NULL){
+            printf("%s\tSCORE UNAVAILABLE",PLAYER[z].name);
+        }
+        else{
         printf("%s\t%d\t%6.2f%%\n",PLAYER[z].name,PLAYER[z].plus,(float)PLAYER[z].plus/items*100);
+        }
     }
 }
 void SubLead(){
@@ -140,7 +151,12 @@ void SubLead(){
         }
     }
     for(int z=0;z<=marker;z++){
-        printf("%s\t%d\t%6.2f%%\n",PLAYER[z].name,PLAYER[z].minus,(float)PLAYER[z].minus/items*100);
+        if(PLAYER[z].minus==NULL){
+            printf("%s\tSCORE UNAVAILABLE",PLAYER[z].name);
+        }
+        else{
+        printf("%s\t%d\n",PLAYER[z].name,PLAYER[z].minus);
+        }
     }
 }
 void DivLead(){
@@ -156,7 +172,12 @@ void DivLead(){
         }
     }
     for(int z=0;z<=marker;z++){
-        printf("%s\t%d\t%6.2f%%\n",PLAYER[z].name,PLAYER[z].divide,(float)PLAYER[z].divide/items*100);
+        if(PLAYER[z].divide==NULL){
+            printf("%s\tSCORE UNAVAILABLE",PLAYER[z].name);
+        }
+        else{
+        printf("%s\t%d\n",PLAYER[z].name,PLAYER[z].divide);
+        }
     }
 }
 void MulLead(){
@@ -172,7 +193,12 @@ void MulLead(){
         }
     }
     for(int z=0;z<=marker;z++){
-        printf("%s\t%d\t%6.2f%%\n",PLAYER[z].name,PLAYER[z].multiply,(float)PLAYER[z].multiply/items*100);
+        if(PLAYER[z].multiply==NULL){
+            printf("%s\tSCORE UNAVAILABLE",PLAYER[z].name);
+        }
+        else{
+        printf("%s\t%d\n",PLAYER[z].name,PLAYER[z].multiply);
+        }
     }
 }
 
@@ -316,9 +342,9 @@ void addition (int n){
         counter = 0;
         for (x=0;x<n;x++){
             system("cls");
-            //generate random numbers from 1 - level
-            y = rand() % level + 1;
-            z = rand() % level + 1;
+            //generate random numbers from 1 - items
+            y = rand() % items + 1;
+            z = rand() % items + 1;
             score();
             gotoxy(40,5);printf("%d.) What is %d + %d? ",x+1,y,z);
             scanf("%d",&answer);
@@ -331,7 +357,8 @@ void addition (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        PLAYER[marker].plus = counter;
+        //will add past score to the new score
+        PLAYER[marker].plus += counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -356,9 +383,9 @@ void subtraction (int n){
         counter = 0;
         for (x=0;x<n;x++){
             system("cls");
-            //generate random numbers from 1 - level
-            y = rand() % level + 1;
-            z = rand() % level + 1;
+            //generate random numbers from 1 - items
+            y = rand() % items + 1;
+            z = rand() % items + 1;
             score();
             if (y>z){
                 gotoxy(40,5);printf("%d.) What is %d - %d? ",x+1,y,z);
@@ -380,7 +407,8 @@ void subtraction (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        PLAYER[marker].minus = counter;
+        //will add past score to the new score
+        PLAYER[marker].minus += counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -407,9 +435,9 @@ void division (int n){
         counter = 0;
         for (x=0;x<n;x++){
             system("cls");
-            //generate random numbers from 1 - level
-            y = rand() % level + 1;
-            z = rand() % level + 1;
+            //generate random numbers from 1 - items
+            y = rand() % items + 1;
+            z = rand() % items + 1;
             score();
             //to have divisible numbers
             temp = y*z;
@@ -425,7 +453,8 @@ void division (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        PLAYER[marker].divide = counter;
+        //will add past score to the new score
+        PLAYER[marker].divide += counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -453,8 +482,8 @@ void multiplication (int n){
         for (x=0;x<n;x++){
             system("cls");
             //generate random numbers from 1 - level
-            y = rand() % level + 1;
-            z = rand() % level + 1;
+            y = rand() % items + 1;
+            z = rand() % items + 1;
             score();
             gotoxy(40,5);printf("%d.) What is %d x %d? ",x+1,y,z);
             scanf("%d",&answer);
@@ -467,7 +496,8 @@ void multiplication (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        PLAYER[marker].multiply = counter;
+        //will add past score to the new score
+        PLAYER[marker].multiply += counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
