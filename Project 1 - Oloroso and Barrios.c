@@ -33,6 +33,11 @@ void save();
 void retrieve();
 void box();
 void leaderboard();
+void AllLead();
+void AddLead();
+void SubLead();
+void DivLead();
+void MulLead();
 void gotoxy(int x,int y){
     COORD coord = {0,0};
     coord.X=x;
@@ -77,16 +82,88 @@ void leaderboard(){
     int i;
     system("cls");
     gotoxy(40,5);printf("Leaderboards");
-    gotoxy(40,6);printf("Addition\tSubtraction\tDivision\tMultiplication");
-    for(i=0;i<=9;i++){
-        gotoxy(37,7+i);printf("%d.)",i+1);
-    }
-    gotoxy(40,18);system("pause");
+    //AllLead();
+    AddLead();
+    SubLead();
+    DivLead();
+    MulLead();
+    system("\npause");
     system("cls");
 }
+
+/*void AllLead(){
+    printf("Over All Ranking");
+
+}*/
+void AddLead(){
+    SREC temp;
+    printf("\nAddition\n");
+    for(int x=0;x<=marker;x++){
+        for(int y=0;y<marker;y++){
+            if (PLAYER[y].plus < PLAYER[y+1].plus){
+            temp = PLAYER[y];
+            PLAYER[y] = PLAYER[y+1];
+            PLAYER[y+1] = temp;
+            }
+        }
+    }
+    for(int z=0;z<=marker;z++){
+        printf("%s\t%d\n",PLAYER[z].name,PLAYER[z].plus);
+    }
+}
+void SubLead(){
+    SREC temp;
+    printf("\nSubtraction\n");
+    for(int x=0;x<=marker;x++){
+        for(int y=0;y<marker;y++){
+            if (PLAYER[y].minus < PLAYER[y+1].minus){
+            temp = PLAYER[y];
+            PLAYER[y] = PLAYER[y+1];
+            PLAYER[y+1] = temp;
+            }
+        }
+    }
+    for(int z=0;z<=marker;z++){
+        printf("%s\t%d\n",PLAYER[z].name,PLAYER[z].minus);
+    }
+}
+void DivLead(){
+    SREC temp;
+    printf("\nDivision\n");
+    for(int x=0;x<=marker;x++){
+        for(int y=0;y<marker;y++){
+            if (PLAYER[y].divide < PLAYER[y+1].divide){
+            temp = PLAYER[y];
+            PLAYER[y] = PLAYER[y+1];
+            PLAYER[y+1] = temp;
+            }
+        }
+    }
+    for(int z=0;z<=marker;z++){
+        printf("%s\t%d\n",PLAYER[z].name,PLAYER[z].divide);
+    }
+}
+void MulLead(){
+    SREC temp;
+    printf("\nMultiplication\n");
+    for(int x=0;x<=marker;x++){
+        for(int y=0;y<marker;y++){
+            if (PLAYER[y].multiply < PLAYER[y+1].multiply){
+            temp = PLAYER[y];
+            PLAYER[y] = PLAYER[y+1];
+            PLAYER[y+1] = temp;
+            }
+        }
+    }
+    for(int z=0;z<=marker;z++){
+        printf("%s\t%d\n",PLAYER[z].name,PLAYER[z].multiply);
+    }
+}
+
 void init(){
     marker = -1;
 }
+
 void box(){
     int i;
     int l = 186, ul=201,ur=187,w=205,dr=188,dl=200;
@@ -121,7 +198,7 @@ void logIn(){
             scanf(" %[^\n]s", player.pass);
             for(int x=0;x<=marker;x++){
                 if (strcmp(player.pass,PLAYER[x].pass)==0){
-                    gotoxy(45,9);system("pause");
+                    gotoxy(45,9);system("pause");break;
                 }else{
                     gotoxy(45,9);printf("Wrong password.");
                     gotoxy(45,11);system("pause");
@@ -423,6 +500,7 @@ void retrieve(){
     SREC players;
     fp = fopen("BSCS-1CD-Leaderboard.txt","r+");
     if (fp==NULL){
+        system("cls");
         printf("Error 404.\nBSCS-1CD-Leaderboard.txt File not found.\n");
         system("pause");
     }
