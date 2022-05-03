@@ -11,9 +11,9 @@ Made By Oloroso, Andrew R. and Barrios, Armand Angelo C.*/
 //Array Structure
 typedef struct playerRec{
     int plus,minus,divide,multiply;
+    float ave;
     char name[69];
     char pass[69];
-    float lead_plus;
 }SREC;
 SREC PLAYER[MAX];
 
@@ -33,7 +33,13 @@ void score();
 void save();
 void retrieve();
 void box();
+void smallbox();
 void leaderboard();
+void AllLead();
+void AddLead();
+void SubLead();
+void DivLead();
+void MulLead();
 void gotoxy(int x,int y){
     COORD coord = {0,0};
     coord.X=x;
@@ -41,7 +47,7 @@ void gotoxy(int x,int y){
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
 }
 //Global Variables
-int items=10,counter,num,marker,level=10;
+int items=10,counter,num,marker;
 char c;
 
 int main(){
@@ -75,18 +81,167 @@ int main(){
 }
 
 void leaderboard(){
-    int i,j;
+    int i;
     system("cls");
-    gotoxy(40,5);printf("Leaderboards");
-    gotoxy(40,6);printf("Username\tAddition");
-    for(i=0;i<=marker;i++){
-        gotoxy(38,7+i);printf("%d.%s\t\t %6.2f%%",i+1,PLAYER[marker].name,PLAYER[marker].lead_plus);
+    for (i=0;i<=marker;i++){
+        PLAYER[i].ave = (PLAYER[i].plus + PLAYER[i].minus + PLAYER[i].divide + PLAYER[i].multiply) / 4.0;
     }
-    gotoxy(40,18);system("pause");
+    gotoxy(44,5);printf("LEADERBOARDS");
+    gotoxy(34,6);printf("Score at least 1 point to qualify");
+    AddLead();
+    SubLead();
+    DivLead();
+    MulLead();
+    gotoxy(38,25);system("pause");
+    AllLead();
+    gotoxy(38,25);system("pause");
     system("cls");
 }
+
+void AllLead(){
+    SREC temp;
+    system("cls");
+    gotoxy(46,5);printf("Overall Rankings\n");
+    for(int x=0;x<=marker;x++){
+        for(int y=0;y<marker;y++){
+            if (PLAYER[y].ave < PLAYER[y+1].ave){
+            temp = PLAYER[y];
+            PLAYER[y] = PLAYER[y+1];
+            PLAYER[y+1] = temp;
+            }
+        }
+    }
+    for(int z=0;z<=marker;z++){
+        if(PLAYER[z].plus==NULL||PLAYER[z].minus==NULL||PLAYER[z].multiply==NULL||PLAYER[z].divide==NULL){
+            gotoxy(44,7);printf("  PLAYER\t  AVERAGE SCORE(%%)");
+            gotoxy(42,8+z);printf("%d.  %s",z+1,PLAYER[z].name);
+            gotoxy(52,8+z);printf("\t  DATA UNAVAILABLE");
+        }
+        else{
+        gotoxy(44,7);printf("  PLAYER\t  AVERAGE SCORE(%%)");
+        gotoxy(42,8+z);printf("%d.  %s\t%6.2f\n",z+1,PLAYER[z].name,PLAYER[z].ave);
+        }
+    }
+}
+void AddLead(){
+    SREC temp;
+    gotoxy(26,8);printf("Addition");
+    for(int x=0;x<=marker;x++){
+        for(int y=0;y<marker;y++){
+            if (PLAYER[y].plus < PLAYER[y+1].plus){
+            temp = PLAYER[y];
+            PLAYER[y] = PLAYER[y+1];
+            PLAYER[y+1] = temp;
+            }
+        }
+    }
+    for(int z=0;z<=marker;z++){
+        if(PLAYER[z].plus==NULL){
+            gotoxy(19,9);printf("  PLAYER\t  SCORE(%%)");
+            gotoxy(17,10+z);printf("%d.  %s",z+1,PLAYER[z].name);
+            gotoxy(25,10+z);printf("\t  ---");
+        }
+        else{
+        gotoxy(19,9);printf("  PLAYER\t  SCORE(%%)");
+        gotoxy(17,10+z);printf("%d.  %s",z+1,PLAYER[z].name);
+        gotoxy(25,10+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].plus,(float)PLAYER[z].plus/items*100);
+        }
+    }
+}
+void SubLead(){
+    SREC temp;
+    gotoxy(66,8);printf("Subtraction");
+    for(int x=0;x<=marker;x++){
+        for(int y=0;y<marker;y++){
+            if (PLAYER[y].minus < PLAYER[y+1].minus){
+            temp = PLAYER[y];
+            PLAYER[y] = PLAYER[y+1];
+            PLAYER[y+1] = temp;
+            }
+        }
+    }
+    for(int z=0;z<=marker;z++){
+        if(PLAYER[z].minus==NULL){
+            gotoxy(59,9);printf("  PLAYER\t  SCORE(%%)");
+            gotoxy(57,10+z);printf("%d.  %s",z+1,PLAYER[z].name);
+            gotoxy(65,10+z);printf("\t  ---");
+        }
+        else{
+        gotoxy(59,9);printf("  PLAYER\t  SCORE(%%)");
+        gotoxy(57,10+z);printf("%d.  %s",z+1,PLAYER[z].name);
+        gotoxy(65,10+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].minus,(float)PLAYER[z].minus/items*100);
+        }
+    }
+}
+void DivLead(){
+    SREC temp;
+    gotoxy(66,19);printf("Division");
+    for(int x=0;x<=marker;x++){
+        for(int y=0;y<marker;y++){
+            if (PLAYER[y].divide < PLAYER[y+1].divide){
+            temp = PLAYER[y];
+            PLAYER[y] = PLAYER[y+1];
+            PLAYER[y+1] = temp;
+            }
+        }
+    }
+    for(int z=0;z<=marker;z++){
+        if(PLAYER[z].divide==NULL){
+            gotoxy(59,20);printf("  PLAYER\t  SCORE(%%)");
+            gotoxy(57,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
+            gotoxy(65,21+z);printf("\t  ---");
+        }
+        else{
+        gotoxy(59,20);printf("  PLAYER\t  SCORE(%%)");
+        gotoxy(57,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
+        gotoxy(65,21+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].divide,(float)PLAYER[z].divide/items*100);
+        }
+    }
+}
+void MulLead(){
+    SREC temp;
+    gotoxy(23,19);printf("Multiplication");
+    for(int x=0;x<=marker;x++){
+        for(int y=0;y<marker;y++){
+            if (PLAYER[y].multiply < PLAYER[y+1].multiply){
+            temp = PLAYER[y];
+            PLAYER[y] = PLAYER[y+1];
+            PLAYER[y+1] = temp;
+            }
+        }
+    }
+    for(int z=0;z<=marker;z++){
+        if(PLAYER[z].multiply==NULL){
+            gotoxy(19,20);printf("  PLAYER\t  SCORE(%%)");
+            gotoxy(17,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
+            gotoxy(25,21+z);printf("\t  ---");
+        }
+        else{
+        gotoxy(19,20);printf("  PLAYER\t  SCORE(%%)");
+        gotoxy(17,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
+        gotoxy(25,21+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].multiply,(float)PLAYER[z].multiply/items*100);
+        }
+    }
+}
+
 void init(){
     marker = -1;
+}
+void smallbox(){
+    int i;
+    int l = 186, ul=201,ur=187,w=205,dr=188,dl=200;
+    gotoxy(33,4);printf("%c", ul);
+    gotoxy(48,4);printf("%c", ur);
+    gotoxy(48,10);printf("%c", dr);
+    gotoxy(33,10);printf("%c", dl);
+    for(i=0;i<=4;i++){
+        gotoxy(33,5+i);printf("%c",l);
+        gotoxy(48,5+i);printf("%c",l);
+    }
+    for (i=0;i<14;i++){
+        gotoxy(34+i,4);printf("%c",w);
+        gotoxy(34+i,10);printf("%c",w);
+    }
 }
 void box(){
     int i;
@@ -117,12 +272,12 @@ void logIn(){
             here:
             system("cls");
             box();
-            gotoxy(45,6);printf("Welcome back %s!", player.name);
+            gotoxy(45,6);printf("Welcome back, %s!", player.name);
             gotoxy(45,7);printf("Enter Password: ");
             scanf(" %[^\n]s", player.pass);
             for(int x=0;x<=marker;x++){
                 if (strcmp(player.pass,PLAYER[x].pass)==0){
-                    gotoxy(45,9);system("pause");
+                    gotoxy(45,9);system("pause");break;
                 }else{
                     gotoxy(45,9);printf("Wrong password.");
                     gotoxy(45,11);system("pause");
@@ -131,7 +286,7 @@ void logIn(){
             }
         }else{
             marker++;
-            strcpy (PLAYER[marker].name,player.name);
+            strcpy(PLAYER[marker].name,player.name);
             system("cls");
             box();
             gotoxy(45,6);printf("A NEW CHALLENGER!");
@@ -219,178 +374,237 @@ int menu(){
 }
 
 void addition (int n){
-    int x,y,z,answer;
+    int x,y,z,answer,ul=196;
     do{
         counter = 0;
         for (x=0;x<n;x++){
             system("cls");
-            //generate random numbers from 1 - level
-            y = rand() % level + 1;
-            z = rand() % level + 1;
+            //generate random numbers from 1 - items
+            y = rand() % items + 1;
+            z = rand() % items + 1;
             score();
-            gotoxy(40,5);printf("%d.) What is %d + %d? ",x+1,y,z);
-            scanf("%d",&answer);
+            smallbox();
+            gotoxy(35,3);printf("Problem #%d",x+1);
+            if (y>9){
+                gotoxy(40,5);printf(" %d ",y);
+                gotoxy(40,6);printf("+ %d ",z);
+            }else if(z>9){
+            gotoxy(40,5);printf("  %d ",y);
+            gotoxy(39,6);printf("+ %d ",z);
+            }else{
+            gotoxy(40,5);printf("  %d ",y);
+            gotoxy(40,6);printf("+ %d ",z);
+            }
+            for(int i=0;i<5;i++){
+                gotoxy(38+i,7);printf("%c",ul);
+            }
+            if((y+z)>9){
+            gotoxy(41,8);scanf("%d",&answer);
+            }else{
+            gotoxy(42,8);scanf("%d",&answer);
+            }
             if(answer == y+z){
-                gotoxy(40,6);printf("Correct!");
+                gotoxy(33,12);printf("Correct!");
                 counter++;score();
             }else{
-                gotoxy(40,6);printf("Wrong. The correct answer is %d.",y+z);
+                gotoxy(33,12);printf("Wrong. The correct answer is %d.",y+z);
             }
-            gotoxy(40,8);system("pause");
+            gotoxy(33,14);system("pause");
         }
         system("cls");
-        PLAYER[marker].lead_plus=(float)counter/items*100;
+        PLAYER[marker].plus = counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
+        }while(c == 'y' || c == 'Y');
         if(c == 'n' || c == 'N'){
             gotoxy(40,10);printf("Do you want to go to menu?");
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
+            }
             if(c == 'n' || c == 'N'){
                     leaderboard();
                     save();
                     exit(0);
-                }else{
-                    return menu();
-                }
             }
-    }while(c == 'y' || c == 'Y');
 }
 
 void subtraction (int n){
-    int x,y,z,answer,temp;
+    int x,y,z,answer,temp,ul=196;
     do{
         counter = 0;
         for (x=0;x<n;x++){
             system("cls");
-            //generate random numbers from 1 - level
-            y = rand() % level + 1;
-            z = rand() % level + 1;
+            //generate random numbers from 1 - items
+            y = rand() % items + 1;
+            z = rand() % items + 1;
             score();
+            smallbox();
+            gotoxy(35,3);printf("Problem #%d",x+1);
+            for(int i=0;i<5;i++){
+                gotoxy(38+i,7);printf("%c",ul);
+            }
             if (y>z){
-                gotoxy(40,5);printf("%d.) What is %d - %d? ",x+1,y,z);
-                scanf("%d",&answer);
                 temp=y-z;
+                if(y>9){
+                gotoxy(40,5);printf(" %d ",y);
+                gotoxy(40,6);printf("- %d ",z);
+                }else{
+                gotoxy(40,5);printf("  %d ",y);
+                gotoxy(40,6);printf("- %d ",z);
+                }
             }
             //if Random number 1 is less than random number 2, switch random number 2 so there is no negative answer
             else {
-                gotoxy(40,5);printf("%d.) What is %d - %d? ",x+1,z,y);
-                scanf("%d",&answer);
                 temp=z-y;
+                if(z>9){
+                gotoxy(40,5);printf(" %d ",z);
+                gotoxy(40,6);printf("- %d ",y);
+                }else{
+                gotoxy(40,5);printf("  %d ",z);
+                gotoxy(40,6);printf("- %d ",y);
+                }
             }
+            gotoxy(42,8);scanf("%d",&answer);
             if(answer == temp){
-                gotoxy(40,6);printf("Correct!");
+                gotoxy(33,12);printf("Correct!");
                 counter++;score();
             }else{
-                gotoxy(40,6);printf("Wrong. The correct answer is %d.",temp);
+                gotoxy(33,12);printf("Wrong. The correct answer is %d.",temp);
             }
-            gotoxy(40,8);system("pause");
+            gotoxy(33,14);system("pause");
         }
         system("cls");
+        PLAYER[marker].minus = counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
-        if(c == 'n' || c == 'N'){
+        }while(c == 'y' || c == 'Y');
+            if(c == 'n' || c == 'N'){
             gotoxy(40,10);printf("Do you want to go to menu?");
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
+            }
             if(c == 'n' || c == 'N'){
                     leaderboard();
                     save();
                     exit(0);
                 }
-            if(c == 'y' || c == 'Y'){
-                    return menu();
-                }
-                getch();
-            }
-    }while(c == 'y' || c == 'Y');
 }
 
 void division (int n){
-    int x,y,z,answer,temp;
+    int x,y,z,answer,temp,ul=196,s=246;
     do{
         counter = 0;
         for (x=0;x<n;x++){
             system("cls");
-            //generate random numbers from 1 - level
-            y = rand() % level + 1;
-            z = rand() % level + 1;
+            //generate random numbers from 1 - items
+            y = rand() % items + 1;
+            z = rand() % items + 1;
             score();
+            smallbox();
+            gotoxy(35,3);printf("Problem #%d",x+1);
+            for(int i=0;i<6;i++){
+                gotoxy(38+i,7);printf("%c",ul);
+            }
             //to have divisible numbers
             temp = y*z;
             y = temp;
-            gotoxy(40,5);printf("%d.) What is %d / %d? ",x+1,y,z);
-            scanf("%d",&answer);
+            if(y>9 && z<10){
+                 gotoxy(40,5);printf(" %d ",y);
+                 gotoxy(40,6);printf("%c %d ",s,z);
+            }else if(z>9 && y>9){
+                gotoxy(40,5);printf(" %d",y);
+                gotoxy(40,6);printf("%c%d ",s,z);
+            }else{
+                gotoxy(40,5);printf("  %d",y);
+                gotoxy(40,6);printf("%c %d ",s,z);
+            }
+            if((y/z)>9){
+            gotoxy(41,8);scanf("%d",&answer);
+            }else{
+            gotoxy(42,8);scanf("%d",&answer);
+            }
             if(answer == y/z){
-                gotoxy(40,6);printf("Correct!");
+                gotoxy(33,12);printf("Correct!");
                 counter++;score();
             }else{
-                gotoxy(40,6);printf("Wrong. The correct answer is %d.",y/z);
+                gotoxy(33,12);printf("Wrong. The correct answer is %d.",y/z);
             }
-            gotoxy(40,8);system("pause");
+            gotoxy(33,14);system("pause");
         }
         system("cls");
+        PLAYER[marker].divide = counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
-        if(c == 'n' || c == 'N'){
-            gotoxy(40,10);printf("Do you want to go to menu?");
-            gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
-            c = getch();
+        }while(c == 'y' || c == 'Y');
+            if(c == 'n' || c == 'N'){
+                gotoxy(40,10);printf("Do you want to go to menu?");
+                gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
+                c = getch();
+            }
             if(c == 'n' || c == 'N'){
                     leaderboard();
                     save();
                     exit(0);
-                }
-            if(c == 'y' || c == 'Y'){
-                    return menu();
-                }
-                getch();
             }
-    }while(c == 'y' || c == 'Y');
 }
 
 void multiplication (int n){
-    int x,y,z,answer;
+    int x,y,z,answer,ul=196;
     do{
         counter = 0;
         for (x=0;x<n;x++){
             system("cls");
             //generate random numbers from 1 - level
-            y = rand() % level + 1;
-            z = rand() % level + 1;
+            y = rand() % items + 1;
+            z = rand() % items + 1;
             score();
-            gotoxy(40,5);printf("%d.) What is %d x %d? ",x+1,y,z);
-            scanf("%d",&answer);
+            smallbox();
+            gotoxy(35,3);printf("Problem #%d",x+1);
+            for(int i=0;i<5;i++){
+                gotoxy(38+i,7);printf("%c",ul);
+            }
+            if (y>9){
+                gotoxy(40,5);printf(" %d ",y);
+                gotoxy(40,6);printf("x %d ",z);
+            }else if(z>9){
+            gotoxy(40,5);printf("  %d ",y);
+            gotoxy(39,6);printf("x %d ",z);
+            }else{
+            gotoxy(40,5);printf("  %d ",y);
+            gotoxy(40,6);printf("x %d ",z);
+            }
+            if((y*z)>9){
+            gotoxy(41,8);scanf("%d",&answer);
+            }else{
+            gotoxy(42,8);scanf("%d",&answer);
+            }
             if(answer == y*z){
-                gotoxy(40,6);printf("Correct!");
+                gotoxy(33,12);printf("Correct!");
                 counter++;score();
             }else{
-                gotoxy(40,6);printf("Wrong. The correct answer is %d.",y*z);
+                gotoxy(33,12);printf("Wrong. The correct answer is %d.",y*z);
             }
-            gotoxy(40,8);system("pause");
+            gotoxy(33,14);system("pause");
         }
         system("cls");
+        PLAYER[marker].multiply = counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
-        if(c == 'n' || c == 'N'){
-            gotoxy(40,10);printf("Do you want to go to menu?");
-            gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
-            c = getch();
+        }while(c == 'y' || c == 'Y');
             if(c == 'n' || c == 'N'){
+                gotoxy(40,10);printf("Do you want to go to menu?");
+                gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
+                c = getch();
+                }
+                if(c == 'n' || c == 'N'){
                     leaderboard();
                     save();
                     exit(0);
                 }
-            if(c == 'y' || c == 'Y'){
-                    return menu();
-                }
-                getch();
-            }
-    }while(c == 'y' || c == 'Y');
 }
 
 void score(){
@@ -402,12 +616,12 @@ void save(){
     int x;
     fp = fopen("BSCS-1CD-Leaderboard.txt","w+");
     if (fp==NULL){
-        printf("Error 404. File not found.\n");
-        system("pause");
+        gotoxy(40,5);printf("Error 404. Saved file was not found.");
+        gotoxy(40,10);system("pause");
     }
     else {
         for (x=0;x<=marker;x++)
-            fprintf(fp, "%s\t%s\t%d %d %d %d %6.2f\n",PLAYER[x].name,PLAYER[x].pass,PLAYER[x].plus,PLAYER[x].minus,PLAYER[x].divide,PLAYER[x].multiply,PLAYER[x].lead_plus);
+            fprintf(fp, "%s\t%s\t%d %d %d %d\n",PLAYER[x].name,PLAYER[x].pass,PLAYER[x].plus,PLAYER[x].minus,PLAYER[x].divide,PLAYER[x].multiply);
         fclose(fp);
       }
 }
@@ -417,14 +631,16 @@ void retrieve(){
     SREC players;
     fp = fopen("BSCS-1CD-Leaderboard.txt","r+");
     if (fp==NULL){
-        printf("Error 404.\nBSCS-1CD-Leaderboard.txt File not found.\n");
-        system("pause");
+        system("cls");
+        gotoxy(40,5);printf("Error 404.");
+        gotoxy(40,6);printf("BSCS-1CD-Leaderboard.txt was not found.");
+        gotoxy(40,10);system("pause");
     }
     else {
         while (!feof(fp)){
             fscanf(fp," %[^\t]s",players.name);
             fscanf(fp," %[^\t]s",players.pass);
-            fscanf(fp,"%d %d %d %d %f\n", &players.plus,&players.minus,&players.divide,&players.multiply,&players.lead_plus);
+            fscanf(fp,"%d %d %d %d\n", &players.plus,&players.minus,&players.divide,&players.multiply);
             AddRec(players);
         }
         fclose(fp);
