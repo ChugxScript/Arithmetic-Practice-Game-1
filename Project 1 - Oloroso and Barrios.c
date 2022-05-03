@@ -92,15 +92,16 @@ void leaderboard(){
     SubLead();
     DivLead();
     MulLead();
+    gotoxy(38,25);system("pause");
     AllLead();
-    system("\npause");
+    gotoxy(38,25);system("pause");
     system("cls");
 }
 
 void AllLead(){
     SREC temp;
     system("cls");
-    printf("Overall Rankings\n");
+    gotoxy(46,5);printf("Overall Rankings\n");
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].ave < PLAYER[y+1].ave){
@@ -111,11 +112,14 @@ void AllLead(){
         }
     }
     for(int z=0;z<=marker;z++){
-        if(PLAYER[z].plus == NULL || PLAYER[z].minus==NULL||PLAYER[z].multiply==NULL||PLAYER[z].divide==NULL){
-            printf("DATA UNAVAILABLE.");
+        if(PLAYER[z].plus==NULL||PLAYER[z].minus==NULL||PLAYER[z].multiply==NULL||PLAYER[z].divide==NULL){
+            gotoxy(44,7);printf("  PLAYER\t  AVERAGE SCORE(%%)");
+            gotoxy(42,8+z);printf("%d.  %s",z+1,PLAYER[z].name);
+            gotoxy(52,8+z);printf("\t  DATA UNAVAILABLE");
         }
         else{
-        printf("%s\t%6.2f\n",PLAYER[z].name,PLAYER[z].ave);
+        gotoxy(44,7);printf("  PLAYER\t  AVERAGE SCORE(%%)");
+        gotoxy(42,8+z);printf("%d.  %s\t%6.2f\n",z+1,PLAYER[z].name,PLAYER[z].ave);
         }
     }
 }
@@ -376,8 +380,7 @@ void addition (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        //will add past score to the new score
-        PLAYER[marker].plus += counter;
+        PLAYER[marker].plus = counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -426,8 +429,7 @@ void subtraction (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        //will add past score to the new score
-        PLAYER[marker].minus += counter;
+        PLAYER[marker].minus = counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -472,8 +474,7 @@ void division (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        //will add past score to the new score
-        PLAYER[marker].divide += counter;
+        PLAYER[marker].divide = counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -515,8 +516,7 @@ void multiplication (int n){
             gotoxy(40,8);system("pause");
         }
         system("cls");
-        //will add past score to the new score
-        PLAYER[marker].multiply += counter;
+        PLAYER[marker].multiply = counter;
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
@@ -546,7 +546,7 @@ void save(){
     int x;
     fp = fopen("BSCS-1CD-Leaderboard.txt","w+");
     if (fp==NULL){
-        gotoxy(40,5);printf("Error 404. Save file was not found.");
+        gotoxy(40,5);printf("Error 404. Saved file was not found.");
         gotoxy(40,10);system("pause");
     }
     else {
