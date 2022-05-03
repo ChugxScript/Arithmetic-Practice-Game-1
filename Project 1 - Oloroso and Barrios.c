@@ -33,6 +33,7 @@ void score();
 void save();
 void retrieve();
 void box();
+void smallbox();
 void leaderboard();
 void AllLead();
 void AddLead();
@@ -226,7 +227,22 @@ void MulLead(){
 void init(){
     marker = -1;
 }
-
+void smallbox(){
+    int i;
+    int l = 186, ul=201,ur=187,w=205,dr=188,dl=200;
+    gotoxy(33,4);printf("%c", ul);
+    gotoxy(48,4);printf("%c", ur);
+    gotoxy(48,10);printf("%c", dr);
+    gotoxy(33,10);printf("%c", dl);
+    for(i=0;i<=4;i++){
+        gotoxy(33,5+i);printf("%c",l);
+        gotoxy(48,5+i);printf("%c",l);
+    }
+    for (i=0;i<14;i++){
+        gotoxy(34+i,4);printf("%c",w);
+        gotoxy(34+i,10);printf("%c",w);
+    }
+}
 void box(){
     int i;
     int l = 186, ul=201,ur=187,w=205,dr=188,dl=200;
@@ -358,7 +374,7 @@ int menu(){
 }
 
 void addition (int n){
-    int x,y,z,answer;
+    int x,y,z,answer,ul=196;
     do{
         counter = 0;
         for (x=0;x<n;x++){
@@ -367,15 +383,33 @@ void addition (int n){
             y = rand() % items + 1;
             z = rand() % items + 1;
             score();
-            gotoxy(40,5);printf("%d.) What is %d + %d? ",x+1,y,z);
-            scanf("%d",&answer);
+            smallbox();
+            gotoxy(35,3);printf("Problem #%d",x+1);
+            if (y>9){
+                gotoxy(40,5);printf(" %d ",y);
+                gotoxy(40,6);printf("+ %d ",z);
+            }else if(z>9){
+            gotoxy(40,5);printf("  %d ",y);
+            gotoxy(39,6);printf("+ %d ",z);
+            }else{
+            gotoxy(40,5);printf("  %d ",y);
+            gotoxy(40,6);printf("+ %d ",z);
+            }
+            for(int i=0;i<5;i++){
+                gotoxy(38+i,7);printf("%c",ul);
+            }
+            if((y+z)>9){
+            gotoxy(41,8);scanf("%d",&answer);
+            }else{
+            gotoxy(42,8);scanf("%d",&answer);
+            }
             if(answer == y+z){
-                gotoxy(40,6);printf("Correct!");
+                gotoxy(33,12);printf("Correct!");
                 counter++;score();
             }else{
-                gotoxy(40,6);printf("Wrong. The correct answer is %d.",y+z);
+                gotoxy(33,12);printf("Wrong. The correct answer is %d.",y+z);
             }
-            gotoxy(40,8);system("pause");
+            gotoxy(33,14);system("pause");
         }
         system("cls");
         PLAYER[marker].plus = counter;
@@ -396,7 +430,7 @@ void addition (int n){
 }
 
 void subtraction (int n){
-    int x,y,z,answer,temp;
+    int x,y,z,answer,temp,ul=196;
     do{
         counter = 0;
         for (x=0;x<n;x++){
@@ -405,24 +439,40 @@ void subtraction (int n){
             y = rand() % items + 1;
             z = rand() % items + 1;
             score();
+            smallbox();
+            gotoxy(35,3);printf("Problem #%d",x+1);
+            for(int i=0;i<5;i++){
+                gotoxy(38+i,7);printf("%c",ul);
+            }
             if (y>z){
-                gotoxy(40,5);printf("%d.) What is %d - %d? ",x+1,y,z);
-                scanf("%d",&answer);
                 temp=y-z;
+                if(y>9){
+                gotoxy(40,5);printf(" %d ",y);
+                gotoxy(40,6);printf("- %d ",z);
+                }else{
+                gotoxy(40,5);printf("  %d ",y);
+                gotoxy(40,6);printf("- %d ",z);
+                }
             }
             //if Random number 1 is less than random number 2, switch random number 2 so there is no negative answer
             else {
-                gotoxy(40,5);printf("%d.) What is %d - %d? ",x+1,z,y);
-                scanf("%d",&answer);
                 temp=z-y;
+                if(z>9){
+                gotoxy(40,5);printf(" %d ",z);
+                gotoxy(40,6);printf("- %d ",y);
+                }else{
+                gotoxy(40,5);printf("  %d ",z);
+                gotoxy(40,6);printf("- %d ",y);
+                }
             }
+            gotoxy(42,8);scanf("%d",&answer);
             if(answer == temp){
-                gotoxy(40,6);printf("Correct!");
+                gotoxy(33,12);printf("Correct!");
                 counter++;score();
             }else{
-                gotoxy(40,6);printf("Wrong. The correct answer is %d.",temp);
+                gotoxy(33,12);printf("Wrong. The correct answer is %d.",temp);
             }
-            gotoxy(40,8);system("pause");
+            gotoxy(33,14);system("pause");
         }
         system("cls");
         PLAYER[marker].minus = counter;
@@ -443,7 +493,7 @@ void subtraction (int n){
 }
 
 void division (int n){
-    int x,y,z,answer,temp;
+    int x,y,z,answer,temp,ul=196,s=246;
     do{
         counter = 0;
         for (x=0;x<n;x++){
@@ -452,18 +502,36 @@ void division (int n){
             y = rand() % items + 1;
             z = rand() % items + 1;
             score();
+            smallbox();
+            gotoxy(35,3);printf("Problem #%d",x+1);
+            for(int i=0;i<6;i++){
+                gotoxy(38+i,7);printf("%c",ul);
+            }
             //to have divisible numbers
             temp = y*z;
             y = temp;
-            gotoxy(40,5);printf("%d.) What is %d / %d? ",x+1,y,z);
-            scanf("%d",&answer);
+            if(y>9 && z<10){
+                 gotoxy(40,5);printf(" %d ",y);
+                 gotoxy(40,6);printf("%c %d ",s,z);
+            }else if(z>9 && y>9){
+                gotoxy(40,5);printf(" %d",y);
+                gotoxy(40,6);printf("%c%d ",s,z);
+            }else{
+                gotoxy(40,5);printf("  %d",y);
+                gotoxy(40,6);printf("%c %d ",s,z);
+            }
+            if((y/z)>9){
+            gotoxy(41,8);scanf("%d",&answer);
+            }else{
+            gotoxy(42,8);scanf("%d",&answer);
+            }
             if(answer == y/z){
-                gotoxy(40,6);printf("Correct!");
+                gotoxy(33,12);printf("Correct!");
                 counter++;score();
             }else{
-                gotoxy(40,6);printf("Wrong. The correct answer is %d.",y/z);
+                gotoxy(33,12);printf("Wrong. The correct answer is %d.",y/z);
             }
-            gotoxy(40,8);system("pause");
+            gotoxy(33,14);system("pause");
         }
         system("cls");
         PLAYER[marker].divide = counter;
@@ -484,7 +552,7 @@ void division (int n){
 }
 
 void multiplication (int n){
-    int x,y,z,answer;
+    int x,y,z,answer,ul=196;
     do{
         counter = 0;
         for (x=0;x<n;x++){
@@ -493,15 +561,33 @@ void multiplication (int n){
             y = rand() % items + 1;
             z = rand() % items + 1;
             score();
-            gotoxy(40,5);printf("%d.) What is %d x %d? ",x+1,y,z);
-            scanf("%d",&answer);
+            smallbox();
+            gotoxy(35,3);printf("Problem #%d",x+1);
+            for(int i=0;i<5;i++){
+                gotoxy(38+i,7);printf("%c",ul);
+            }
+            if (y>9){
+                gotoxy(40,5);printf(" %d ",y);
+                gotoxy(40,6);printf("x %d ",z);
+            }else if(z>9){
+            gotoxy(40,5);printf("  %d ",y);
+            gotoxy(39,6);printf("x %d ",z);
+            }else{
+            gotoxy(40,5);printf("  %d ",y);
+            gotoxy(40,6);printf("x %d ",z);
+            }
+            if((y*z)>9){
+            gotoxy(41,8);scanf("%d",&answer);
+            }else{
+            gotoxy(42,8);scanf("%d",&answer);
+            }
             if(answer == y*z){
-                gotoxy(40,6);printf("Correct!");
+                gotoxy(33,12);printf("Correct!");
                 counter++;score();
             }else{
-                gotoxy(40,6);printf("Wrong. The correct answer is %d.",y*z);
+                gotoxy(33,12);printf("Wrong. The correct answer is %d.",y*z);
             }
-            gotoxy(40,8);system("pause");
+            gotoxy(33,14);system("pause");
         }
         system("cls");
         PLAYER[marker].multiply = counter;
