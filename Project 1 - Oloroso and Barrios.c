@@ -86,20 +86,21 @@ void leaderboard(){
     for (i=0;i<=marker;i++){
         PLAYER[i].ave = (PLAYER[i].plus + PLAYER[i].minus + PLAYER[i].divide + PLAYER[i].multiply) / 4.0;
     }
-    gotoxy(40,5);printf("Leaderboards");
-    gotoxy(40,5);printf("Score at least 1 point to qualify in the leaderboards.");
-    AllLead();
+    gotoxy(52,5);printf("Leaderboards");
+    gotoxy(42,6);printf("Score at least 1 point to qualify.");
     AddLead();
     SubLead();
     DivLead();
     MulLead();
+    AllLead();
     system("\npause");
     system("cls");
 }
 
 void AllLead(){
     SREC temp;
-    printf("\nOver All Ranking\n");
+    system("cls");
+    printf("Overall Rankings\n");
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].ave < PLAYER[y+1].ave){
@@ -120,7 +121,7 @@ void AllLead(){
 }
 void AddLead(){
     SREC temp;
-    printf("\nAddition\n");
+    gotoxy(26,8);printf("Addition");
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].plus < PLAYER[y+1].plus){
@@ -132,16 +133,20 @@ void AddLead(){
     }
     for(int z=0;z<=marker;z++){
         if(PLAYER[z].plus==NULL){
-            printf("%s\tSCORE UNAVAILABLE",PLAYER[z].name);
+            gotoxy(19,9);printf("  PLAYER\t  SCORE(%%)");
+            gotoxy(17,10+z);printf("%d.  %s",z+1,PLAYER[z].name);
+            gotoxy(25,10+z);printf("\t  ---");
         }
         else{
-        printf("%s\t%d\t%6.2f%%\n",PLAYER[z].name,PLAYER[z].plus,(float)PLAYER[z].plus/items*100);
+        gotoxy(3,9);printf("  PLAYER\t  SCORE(%%)");
+        gotoxy(1,10+z);printf("%d.  %s",z+1,PLAYER[z].name);
+        gotoxy(9,10+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].plus,(float)PLAYER[z].plus/items*100);
         }
     }
 }
 void SubLead(){
     SREC temp;
-    printf("\nSubtraction\n");
+    gotoxy(66,8);printf("Subtraction");
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].minus < PLAYER[y+1].minus){
@@ -153,16 +158,20 @@ void SubLead(){
     }
     for(int z=0;z<=marker;z++){
         if(PLAYER[z].minus==NULL){
-            printf("%s\tSCORE UNAVAILABLE",PLAYER[z].name);
+            gotoxy(43,9);printf("  PLAYER\t  SCORE(%%)");
+            gotoxy(41,10+z);printf("%d.  %s",z+1,PLAYER[z].name);
+            gotoxy(49,10+z);printf("\t  ---");
         }
         else{
-        printf("%s\t%d\n",PLAYER[z].name,PLAYER[z].minus);
+        gotoxy(43,9);printf("  PLAYER\t  SCORE(%%)");
+        gotoxy(41,10+z);printf("%d.  %s",z+1,PLAYER[z].name);
+        gotoxy(49,10+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].minus,(float)PLAYER[z].minus/items*100);
         }
     }
 }
 void DivLead(){
     SREC temp;
-    printf("\nDivision\n");
+    gotoxy(66,19);printf("Division");
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].divide < PLAYER[y+1].divide){
@@ -174,16 +183,20 @@ void DivLead(){
     }
     for(int z=0;z<=marker;z++){
         if(PLAYER[z].divide==NULL){
-            printf("%s\tSCORE UNAVAILABLE",PLAYER[z].name);
+            gotoxy(43,20);printf("  PLAYER\t  SCORE(%%)");
+            gotoxy(41,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
+            gotoxy(49,21+z);printf("\t  ---");
         }
         else{
-        printf("%s\t%d\n",PLAYER[z].name,PLAYER[z].divide);
+        gotoxy(43,20);printf("  PLAYER\t  SCORE(%%)");
+        gotoxy(41,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
+        gotoxy(49,21+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].divide,(float)PLAYER[z].divide/items*100);
         }
     }
 }
 void MulLead(){
     SREC temp;
-    printf("\nMultiplication\n");
+    gotoxy(26,19);printf("Multiplication");
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].multiply < PLAYER[y+1].multiply){
@@ -195,12 +208,18 @@ void MulLead(){
     }
     for(int z=0;z<=marker;z++){
         if(PLAYER[z].multiply==NULL){
-            printf("%s\tSCORE UNAVAILABLE",PLAYER[z].name);
+            gotoxy(3,20);printf("  PLAYER\t  SCORE(%%)");
+            gotoxy(1,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
+            gotoxy(9,21+z);printf("\t  ---");
         }
         else{
-        printf("%s\t%d\n",PLAYER[z].name,PLAYER[z].multiply);
+        gotoxy(3,20);printf("  PLAYER\t  SCORE(%%)");
+        gotoxy(1,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
+        gotoxy(9,21+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].multiply,(float)PLAYER[z].multiply/items*100);
         }
     }
+       gotoxy(8,35
+              );system("pause");
 }
 
 void init(){
@@ -236,7 +255,7 @@ void logIn(){
             here:
             system("cls");
             box();
-            gotoxy(45,6);printf("Welcome back %s!", player.name);
+            gotoxy(45,6);printf("Welcome back, %s!", player.name);
             gotoxy(45,7);printf("Enter Password: ");
             scanf(" %[^\n]s", player.pass);
             for(int x=0;x<=marker;x++){
@@ -250,7 +269,7 @@ void logIn(){
             }
         }else{
             marker++;
-            strcpy (PLAYER[marker].name,player.name);
+            strcpy(PLAYER[marker].name,player.name);
             system("cls");
             box();
             gotoxy(45,6);printf("A NEW CHALLENGER!");
@@ -528,8 +547,8 @@ void save(){
     int x;
     fp = fopen("BSCS-1CD-Leaderboard.txt","w+");
     if (fp==NULL){
-        printf("Error 404. File not found.\n");
-        system("pause");
+        gotoxy(40,5);printf("Error 404. Save file was not found.");
+        gotoxy(40,10);system("pause");
     }
     else {
         for (x=0;x<=marker;x++)
@@ -544,8 +563,9 @@ void retrieve(){
     fp = fopen("BSCS-1CD-Leaderboard.txt","r+");
     if (fp==NULL){
         system("cls");
-        printf("Error 404.\nBSCS-1CD-Leaderboard.txt File not found.\n");
-        system("pause");
+        gotoxy(40,5);printf("Error 404.");
+        gotoxy(40,6);printf("BSCS-1CD-Leaderboard.txt was not found.");
+        gotoxy(40,10);system("pause");
     }
     else {
         while (!feof(fp)){
