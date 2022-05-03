@@ -383,19 +383,17 @@ void addition (int n){
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
+        }while(c == 'y' || c == 'Y');
         if(c == 'n' || c == 'N'){
             gotoxy(40,10);printf("Do you want to go to menu?");
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
+            }
             if(c == 'n' || c == 'N'){
                     leaderboard();
                     save();
                     exit(0);
-                }else{
-                    return menu();
-                }
             }
-    }while(c == 'y' || c == 'Y');
 }
 
 void subtraction (int n){
@@ -432,21 +430,17 @@ void subtraction (int n){
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
-        if(c == 'n' || c == 'N'){
+        }while(c == 'y' || c == 'Y');
+            if(c == 'n' || c == 'N'){
             gotoxy(40,10);printf("Do you want to go to menu?");
             gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
             c = getch();
+            }
             if(c == 'n' || c == 'N'){
                     leaderboard();
                     save();
                     exit(0);
                 }
-            if(c == 'y' || c == 'Y'){
-                    return menu();
-                }
-                getch();
-            }
-    }while(c == 'y' || c == 'Y');
 }
 
 void division (int n){
@@ -477,21 +471,17 @@ void division (int n){
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
-        if(c == 'n' || c == 'N'){
-            gotoxy(40,10);printf("Do you want to go to menu?");
-            gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
-            c = getch();
+        }while(c == 'y' || c == 'Y');
+            if(c == 'n' || c == 'N'){
+                gotoxy(40,10);printf("Do you want to go to menu?");
+                gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
+                c = getch();
+            }
             if(c == 'n' || c == 'N'){
                     leaderboard();
                     save();
                     exit(0);
-                }
-            if(c == 'y' || c == 'Y'){
-                    return menu();
-                }
-                getch();
             }
-    }while(c == 'y' || c == 'Y');
 }
 
 void multiplication (int n){
@@ -519,21 +509,17 @@ void multiplication (int n){
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
         c = getch();
-        if(c == 'n' || c == 'N'){
-            gotoxy(40,10);printf("Do you want to go to menu?");
-            gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
-            c = getch();
+        }while(c == 'y' || c == 'Y');
             if(c == 'n' || c == 'N'){
+                gotoxy(40,10);printf("Do you want to go to menu?");
+                gotoxy(40,11);printf(" [Y] if Yes. [N] to Exit.");
+                c = getch();
+                }
+                if(c == 'n' || c == 'N'){
                     leaderboard();
                     save();
                     exit(0);
                 }
-            if(c == 'y' || c == 'Y'){
-                    return menu();
-                }
-                getch();
-            }
-    }while(c == 'y' || c == 'Y');
 }
 
 void score(){
