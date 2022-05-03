@@ -221,7 +221,6 @@ void MulLead(){
         gotoxy(25,21+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].multiply,(float)PLAYER[z].multiply/items*100);
         }
     }
-       gotoxy(38,25);system("pause");
 }
 
 void init(){
