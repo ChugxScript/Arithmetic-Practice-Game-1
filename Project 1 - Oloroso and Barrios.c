@@ -14,7 +14,6 @@ typedef struct playerRec{
     float ave;
     char name[69];
     char pass[69];
-    int flag;
 }SREC;
 SREC PLAYER[MAX];
 
