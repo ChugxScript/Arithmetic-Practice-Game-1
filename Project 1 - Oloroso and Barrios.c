@@ -249,26 +249,14 @@ void addition (){
             y = rand() % level + start;
             z = rand() % level + start;
             score();
-             smallbox();
-            gotoxy(35,3);printf("Problem #%d",x+1);
-            if (y>9){
-                gotoxy(40,5);printf(" %d ",y);
-                gotoxy(40,6);printf("+ %d ",z);
-            }else if(z>9){
-                gotoxy(40,5);printf("  %d ",y);
-                gotoxy(39,6);printf("+ %d ",z);
-            }else{
-                gotoxy(40,5);printf("  %d ",y);
-                gotoxy(40,6);printf("+ %d ",z);
-            }
-            for(int i=0;i<5;i++){
+            smallbox();
+            for(int i=0;i<7;i++){
                 gotoxy(38+i,7);printf("%c",ul);
             }
-            if((y+z)>9){
-                gotoxy(41,8);scanf("%d",&answer);
-            }else{
-                gotoxy(42,8);scanf("%d",&answer);
-            }
+            gotoxy(35,3);printf("Problem #%d",x+1);
+            gotoxy(40,5);printf("  %d ",y);
+            gotoxy(40,6);printf("+ %d ",z);
+            gotoxy(41,8);scanf("%d",&answer);
             if(answer == y+z){
                 gotoxy(33,12);printf("Correct!");
                 counter++;score();
@@ -319,31 +307,21 @@ void subtraction (){
             score();
             smallbox();
             gotoxy(35,3);printf("Problem #%d",x+1);
-            for(int i=0;i<5;i++){
+            for(int i=0;i<7;i++){
                 gotoxy(38+i,7);printf("%c",ul);
             }
             if (y>z){
                 temp=y-z;
-                if(y>9){
-                    gotoxy(40,5);printf(" %d ",y);
-                    gotoxy(40,6);printf("- %d ",z);
-                }else{
-                    gotoxy(40,5);printf("  %d ",y);
-                    gotoxy(40,6);printf("- %d ",z);
-                }
+                gotoxy(40,5);printf("  %d ",y);
+                gotoxy(40,6);printf("- %d ",z);
             }
             //if Random number 1 is less than random number 2, switch random number 2 so there is no negative answer
             else {
                 temp=z-y;
-                if(z>9){
-                    gotoxy(40,5);printf(" %d ",z);
-                    gotoxy(40,6);printf("- %d ",y);
-                }else{
-                    gotoxy(40,5);printf("  %d ",z);
-                    gotoxy(40,6);printf("- %d ",y);
-                }
+                gotoxy(40,5);printf("  %d ",z);
+                gotoxy(40,6);printf("- %d ",y);
             }
-            gotoxy(42,8);scanf("%d",&answer);
+            gotoxy(41,8);scanf("%d",&answer);
             if(answer == temp){
                 gotoxy(33,12);printf("Correct!");
                 counter++;score();
@@ -394,27 +372,15 @@ void division (){
             score();
             smallbox();
             gotoxy(35,3);printf("Problem #%d",x+1);
-            for(int i=0;i<6;i++){
+            for(int i=0;i<7;i++){
                 gotoxy(38+i,7);printf("%c",ul);
             }
             //to have divisible numbers
             temp = y*z;
             y = temp;
-            if(y>9 && z<10){
-                 gotoxy(40,5);printf(" %d ",y);
-                 gotoxy(40,6);printf("%c %d ",s,z);
-            }else if(z>9 && y>9){
-                gotoxy(40,5);printf(" %d",y);
-                gotoxy(40,6);printf("%c%d ",s,z);
-            }else{
-                gotoxy(40,5);printf("  %d",y);
-                gotoxy(40,6);printf("%c %d ",s,z);
-            }
-            if((y/z)>9){
-                gotoxy(41,8);scanf("%d",&answer);
-            }else{
-                gotoxy(42,8);scanf("%d",&answer);
-            }
+            gotoxy(40,5);printf("  %d",y);
+            gotoxy(40,6);printf("%c %d ",s,z);
+            gotoxy(41,8);scanf("%d",&answer);
             if(answer == y/z){
                 gotoxy(33,12);printf("Correct!");
                 counter++;score();
@@ -465,24 +431,12 @@ void multiplication (){
             score();
             smallbox();
             gotoxy(35,3);printf("Problem #%d",x+1);
-            for(int i=0;i<5;i++){
+            for(int i=0;i<7;i++){
                 gotoxy(38+i,7);printf("%c",ul);
             }
-            if (y>9){
-                gotoxy(40,5);printf(" %d ",y);
-                gotoxy(40,6);printf("x %d ",z);
-            }else if(z>9){
-                gotoxy(40,5);printf("  %d ",y);
-                gotoxy(39,6);printf("x %d ",z);
-            }else{
-                gotoxy(40,5);printf("  %d ",y);
-                gotoxy(40,6);printf("x %d ",z);
-            }
-            if((y*z)>9){
-                gotoxy(41,8);scanf("%d",&answer);
-            }else{
-                gotoxy(42,8);scanf("%d",&answer);
-            }
+            gotoxy(40,5);printf("  %d ",y);
+            gotoxy(40,6);printf("x %d ",z);
+            gotoxy(41,8);scanf("%d",&answer);
             if(answer == y*z){
                 gotoxy(33,12);printf("Correct!");
                 counter++;score();
@@ -526,14 +480,14 @@ void score(){
 void GetLevel(){
     int l;
     system("cls");
-    printf("Select level\n");
-    printf(" Level 1: Very Easy\n");
-    printf(" Level 2: Easy\n");
-    printf(" Level 3: Medium\n");
-    printf(" Level 4: Hard\n");
-    printf(" Level 5: Very Hard\n");
-    printf("Select level: ");
-    scanf("%d", &l);
+    gotoxy(40,5);printf("Select level");
+    gotoxy(40,6);printf("Level 1: Very Easy");
+    gotoxy(40,7);printf("Level 2: Easy");
+    gotoxy(40,8);printf("Level 3: Medium");
+    gotoxy(40,9);printf("Level 4: Hard");
+    gotoxy(40,10);printf("Level 5: Very Hard");
+    gotoxy(40,13);printf("Choose level: ");
+    gotoxy(55,13);scanf("%d", &l);
     switch (l){
         case 1: level = 10;
                 items = 10;
