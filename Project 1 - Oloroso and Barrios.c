@@ -86,8 +86,8 @@ void leaderboard(){
     for (i=0;i<=marker;i++){
         PLAYER[i].ave = (PLAYER[i].plus + PLAYER[i].minus + PLAYER[i].divide + PLAYER[i].multiply) / 4.0;
     }
-    gotoxy(52,5);printf("Leaderboards");
-    gotoxy(42,6);printf("Score at least 1 point to qualify.");
+    gotoxy(44,5);printf("LEADERBOARDS");
+    gotoxy(34,6);printf("Score at least 1 point to qualify");
     AddLead();
     SubLead();
     DivLead();
@@ -138,9 +138,9 @@ void AddLead(){
             gotoxy(25,10+z);printf("\t  ---");
         }
         else{
-        gotoxy(3,9);printf("  PLAYER\t  SCORE(%%)");
-        gotoxy(1,10+z);printf("%d.  %s",z+1,PLAYER[z].name);
-        gotoxy(9,10+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].plus,(float)PLAYER[z].plus/items*100);
+        gotoxy(19,9);printf("  PLAYER\t  SCORE(%%)");
+        gotoxy(17,10+z);printf("%d.  %s",z+1,PLAYER[z].name);
+        gotoxy(25,10+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].plus,(float)PLAYER[z].plus/items*100);
         }
     }
 }
@@ -158,14 +158,14 @@ void SubLead(){
     }
     for(int z=0;z<=marker;z++){
         if(PLAYER[z].minus==NULL){
-            gotoxy(43,9);printf("  PLAYER\t  SCORE(%%)");
-            gotoxy(41,10+z);printf("%d.  %s",z+1,PLAYER[z].name);
-            gotoxy(49,10+z);printf("\t  ---");
+            gotoxy(59,9);printf("  PLAYER\t  SCORE(%%)");
+            gotoxy(57,10+z);printf("%d.  %s",z+1,PLAYER[z].name);
+            gotoxy(65,10+z);printf("\t  ---");
         }
         else{
-        gotoxy(43,9);printf("  PLAYER\t  SCORE(%%)");
-        gotoxy(41,10+z);printf("%d.  %s",z+1,PLAYER[z].name);
-        gotoxy(49,10+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].minus,(float)PLAYER[z].minus/items*100);
+        gotoxy(59,9);printf("  PLAYER\t  SCORE(%%)");
+        gotoxy(57,10+z);printf("%d.  %s",z+1,PLAYER[z].name);
+        gotoxy(65,10+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].minus,(float)PLAYER[z].minus/items*100);
         }
     }
 }
@@ -183,20 +183,20 @@ void DivLead(){
     }
     for(int z=0;z<=marker;z++){
         if(PLAYER[z].divide==NULL){
-            gotoxy(43,20);printf("  PLAYER\t  SCORE(%%)");
-            gotoxy(41,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
-            gotoxy(49,21+z);printf("\t  ---");
+            gotoxy(59,20);printf("  PLAYER\t  SCORE(%%)");
+            gotoxy(57,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
+            gotoxy(65,21+z);printf("\t  ---");
         }
         else{
-        gotoxy(43,20);printf("  PLAYER\t  SCORE(%%)");
-        gotoxy(41,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
-        gotoxy(49,21+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].divide,(float)PLAYER[z].divide/items*100);
+        gotoxy(59,20);printf("  PLAYER\t  SCORE(%%)");
+        gotoxy(57,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
+        gotoxy(65,21+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].divide,(float)PLAYER[z].divide/items*100);
         }
     }
 }
 void MulLead(){
     SREC temp;
-    gotoxy(26,19);printf("Multiplication");
+    gotoxy(23,19);printf("Multiplication");
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].multiply < PLAYER[y+1].multiply){
@@ -208,18 +208,17 @@ void MulLead(){
     }
     for(int z=0;z<=marker;z++){
         if(PLAYER[z].multiply==NULL){
-            gotoxy(3,20);printf("  PLAYER\t  SCORE(%%)");
-            gotoxy(1,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
-            gotoxy(9,21+z);printf("\t  ---");
+            gotoxy(19,20);printf("  PLAYER\t  SCORE(%%)");
+            gotoxy(17,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
+            gotoxy(25,21+z);printf("\t  ---");
         }
         else{
-        gotoxy(3,20);printf("  PLAYER\t  SCORE(%%)");
-        gotoxy(1,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
-        gotoxy(9,21+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].multiply,(float)PLAYER[z].multiply/items*100);
+        gotoxy(19,20);printf("  PLAYER\t  SCORE(%%)");
+        gotoxy(17,21+z);printf("%d.  %s",z+1,PLAYER[z].name);
+        gotoxy(25,21+z);printf("\t  %d (%6.2f%%)\n",PLAYER[z].multiply,(float)PLAYER[z].multiply/items*100);
         }
     }
-       gotoxy(8,35
-              );system("pause");
+       gotoxy(38,25);system("pause");
 }
 
 void init(){
