@@ -51,7 +51,7 @@ void gotoxy(int x,int y){
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
 }
 //Global Variables
-int items,counter,num,marker,level,start;
+int items=10,counter,num,marker,level,start;
 char c;
 
 int main(){
@@ -490,19 +490,14 @@ void GetLevel(){
     gotoxy(55,13);scanf("%d", &l);
     switch (l){
         case 1: level = 10;
-                items = 10;
                 start = 1; break;
         case 2: level = 20;
-                items = 10;
                 start = 10; break;
         case 3: level = 50;
-                items = 10;
                 start = 20; break;
         case 4: level = 80;
-                items = 10;
                 start = 50; break;
         case 5: level = 100;
-                items = 10;
                 start = 80; break;
         default: printf("1-5 only"); break;
     }
@@ -518,11 +513,12 @@ void save(){
     }
     else {
         for (x=0;x<=marker;x++)
-            fprintf(fp, "%s\t%s\t%d %d %d %d\t",PLAYER[x].name,PLAYER[x].pass,PLAYER[x].plus,PLAYER[x].minus,PLAYER[x].divide,PLAYER[x].multiply);
-            fprintf(fp, "%d %d %d %d\t",PLAYER[x].plus2,PLAYER[x].minus2,PLAYER[x].divide2,PLAYER[x].multiply2);
-            fprintf(fp, "%d %d %d %d\t",PLAYER[x].plus3,PLAYER[x].minus3,PLAYER[x].divide3,PLAYER[x].multiply3);
-            fprintf(fp, "%d %d %d %d\t",PLAYER[x].plus4,PLAYER[x].minus4,PLAYER[x].divide4,PLAYER[x].multiply4);
-            fprintf(fp, "%d %d %d %d\n",PLAYER[x].plus5,PLAYER[x].minus5,PLAYER[x].divide5,PLAYER[x].multiply5);
+            fprintf(fp, "%s\t%s\t%d %d %d %d\t%d %d %d %d\t%d %d %d %d\t%d %d %d %d\t%d %d %d %d\n",PLAYER[x].name,PLAYER[x].pass,
+                    PLAYER[x].plus,PLAYER[x].minus,PLAYER[x].divide,PLAYER[x].multiply,
+                    PLAYER[x].plus2,PLAYER[x].minus2,PLAYER[x].divide2,PLAYER[x].multiply2,
+                    PLAYER[x].plus3,PLAYER[x].minus3,PLAYER[x].divide3,PLAYER[x].multiply3,
+                    PLAYER[x].plus4,PLAYER[x].minus4,PLAYER[x].divide4,PLAYER[x].multiply4,
+                    PLAYER[x].plus5,PLAYER[x].minus5,PLAYER[x].divide5,PLAYER[x].multiply5);
         fclose(fp);
       }
 }
@@ -541,11 +537,12 @@ void retrieve(){
         while (!feof(fp)){
             fscanf(fp," %[^\t]s",players.name);
             fscanf(fp," %[^\t]s",players.pass);
-            fscanf(fp,"%d %d %d %d\t", &players.plus,&players.minus,&players.divide,&players.multiply);
-            fscanf(fp,"%d %d %d %d\t", &players.plus2,&players.minus2,&players.divide2,&players.multiply2);
-            fscanf(fp,"%d %d %d %d\t", &players.plus3,&players.minus3,&players.divide3,&players.multiply3);
-            fscanf(fp,"%d %d %d %d\t", &players.plus4,&players.minus4,&players.divide4,&players.multiply4);
-            fscanf(fp,"%d %d %d %d\n", &players.plus5,&players.minus5,&players.divide5,&players.multiply5);
+            fscanf(fp,"%d %d %d %d\t%d %d %d %d\t%d %d %d %d\t%d %d %d %d\t%d %d %d %d\n",
+                   &players.plus,&players.minus,&players.divide,&players.multiply,
+                   &players.plus2,&players.minus2,&players.divide2,&players.multiply2,
+                   &players.plus3,&players.minus3,&players.divide3,&players.multiply3,
+                   &players.plus4,&players.minus4,&players.divide4,&players.multiply4,
+                   &players.plus5,&players.minus5,&players.divide5,&players.multiply5);
             AddRec(players);
         }
         fclose(fp);
@@ -1229,7 +1226,7 @@ void SubLead5(){
 }
 void DivLead5(){
     SREC temp;
-    gotoxy(66,19);printf("Division level 2");
+    gotoxy(66,19);printf("Division level 5");
     //checking every single player and sort in descending order according to the division score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
