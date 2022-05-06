@@ -180,24 +180,41 @@ int locate(char n[69]){
 }
 
 void TitleScreen(){
-    system("COLOR 0A");
-    gotoxy(10,4);printf("..:::::..::..:::::..::....:::::..:::::..:::::..::..:::::..::........:::::..:::::....:::......:::");
-    gotoxy(10,5);printf(":::'###::::'########::'####:'########:'##::::'##:'##::::'##:'########:'########:'####::'######::");
-    gotoxy(10,6);printf("::'## ##::: ##.... ##:. ##::... ##..:: ##:::: ##: ###::'###: ##.....::... ##..::. ##::'##... ##:");
-    gotoxy(10,7);printf(":'##:. ##:: ##:::: ##:: ##::::: ##:::: ##:::: ##: ####'####: ##:::::::::: ##::::: ##:: ##:::..::");
-    gotoxy(10,8);printf("'##:::. ##: ########::: ##::::: ##:::: #########: ## ### ##: ######:::::: ##::::: ##:: ##:::::::");
-    gotoxy(10,9);printf(".#########: ##.. ##:::: ##::::: ##:::: ##.... ##: ##. #: ##: ##...::::::: ##::::: ##:: ##:::::::");
-    gotoxy(10,10);printf(".##.... ##: ##::. ##::: ##::::: ##:::: ##:::: ##: ##:.:: ##: ##:::::::::: ##::::: ##:: ##::: ##:");
-    gotoxy(10,11);printf(".##:::: ##: ##:::. ##:'####:::: ##:::: ##:::: ##: ##:::: ##: ########:::: ##::::'####:. ######::");
-    gotoxy(10,12);printf("..:::::..::..:::::..::....:::::..:::::..:::::..::..:::::..::........:::::..:::::....:::......:::");
-    gotoxy(30,13);printf(":'######::::::'###::::'##::::'##:'########:");
-    gotoxy(30,14);printf("'##... ##::::'## ##::: ###::'###: ##.....::");
-    gotoxy(30,15);printf(".##:::..::::'##:. ##:: ####'####: ##:::::::");
-    gotoxy(30,16);printf(".##::'####:'##:::. ##: ## ### ##: ######:::");
-    gotoxy(30,17);printf(".##::: ##:: #########: ##. #: ##: ##...::::");
-    gotoxy(30,18);printf(".##::: ##:: ##.... ##: ##:.:: ##: ##:::::::");
-    gotoxy(30,19);printf("..######::: ##:::: ##: ##:::: ##: ########:");
-    gotoxy(30,20);printf(":......::::..:::::..::..:::::..::........::");
+    char game_title[21][98]=
+    {
+        {"##################################################################################################"},
+        {"                                                                                                  "},
+        {" ..:::::..::..:::::..::....:::::..:::::..:::::..::..:::::..::........:::::..:::::....:::......::: "},
+        {" :::'###::::'########::'####:'########:'##::::'##:'##::::'##:'########:'########:'####::'######:: "},
+        {" ::'## ##::: ##.... ##:. ##::... ##..:: ##:::: ##: ###::'###: ##.....::... ##..::. ##::'##... ##: "},
+        {" :'##:. ##:: ##:::: ##:: ##::::: ##:::: ##:::: ##: ####'####: ##:::::::::: ##::::: ##:: ##:::..:: "},
+        {" '##:::. ##: ########::: ##::::: ##:::: #########: ## ### ##: ######:::::: ##::::: ##:: ##::::::: "},
+        {" .#########: ##.. ##:::: ##::::: ##:::: ##.... ##: ##. #: ##: ##...::::::: ##::::: ##:: ##::::::: "},
+        {" .##.... ##: ##::. ##::: ##::::: ##:::: ##:::: ##: ##:.:: ##: ##:::::::::: ##::::: ##:: ##::: ##: "},
+        {" .##:::: ##: ##:::. ##:'####:::: ##:::: ##:::: ##: ##:::: ##: ########:::: ##::::'####:. ######:: "},
+        {"                             :.::::::.:...::::::.::..:::::..::........::                          "},
+        {"                             :'######::::::'###::::'##::::'##:'########:                          "},
+        {"                             '##... ##::::'## ##::: ###::'###: ##.....::                          "},
+        {"                             .##:::..::::'##:. ##:: ####'####: ##:::::::                          "},
+        {"                             .##::'####:'##:::. ##: ## ### ##: ######:::                          "},
+        {"                             .##::: ##:: #########: ##. #: ##: ##...::::                          "},
+        {"                             .##::: ##:: ##.... ##: ##:.:: ##: ##:::::::                          "},
+        {"                             ..######::: ##:::: ##: ##:::: ##: ########:                          "},
+        {"                             :......::::..:::::..::..:::::..::........::                          "},
+        {"                                                                                                  "},
+        {"##################################################################################################"}
+    };
+    // for looop for printing the title screen
+    for (int x=0; x<21; x++)
+    {
+        printf("\t");
+        for (int y=0; y<98; y++)
+        {
+            printf("%c", game_title[x][y]);
+        }
+        printf("\n");
+        system("COLOR 0A");
+    }
     gotoxy(40,25);system("pause");
     system("cls");
 }
@@ -542,6 +559,7 @@ void leaderboard(){
     }
     gotoxy(44,5);printf("LEADERBOARDS");
     gotoxy(34,6);printf("Score at least 1 point to qualify");
+    gotoxy(47,7);printf("Level 1");
     AddLead();
     SubLead();
     DivLead();
@@ -550,6 +568,7 @@ void leaderboard(){
     system("cls");
     gotoxy(44,5);printf("LEADERBOARDS");
     gotoxy(34,6);printf("Score at least 1 point to qualify");
+    gotoxy(47,7);printf("Level 2");
     AddLead2();
     SubLead2();
     DivLead2();
@@ -558,6 +577,7 @@ void leaderboard(){
     system("cls");
     gotoxy(44,5);printf("LEADERBOARDS");
     gotoxy(34,6);printf("Score at least 1 point to qualify");
+    gotoxy(47,7);printf("Level 3");
     AddLead3();
     SubLead3();
     DivLead3();
@@ -566,6 +586,7 @@ void leaderboard(){
     system("cls");
     gotoxy(44,5);printf("LEADERBOARDS");
     gotoxy(34,6);printf("Score at least 1 point to qualify");
+    gotoxy(47,7);printf("Level 4");
     AddLead4();
     SubLead4();
     DivLead4();
@@ -574,6 +595,7 @@ void leaderboard(){
     system("cls");
     gotoxy(44,5);printf("LEADERBOARDS");
     gotoxy(34,6);printf("Score at least 1 point to qualify");
+    gotoxy(47,7);printf("Level 5");
     AddLead5();
     SubLead5();
     DivLead5();
@@ -750,7 +772,7 @@ void AllLead2(){
 }
 void AddLead2(){
     SREC temp;
-    gotoxy(26,8);printf("Addition level 2");
+    gotoxy(26,8);printf("Addition");
     //checking every single player and sort in descending order according to the addition score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -777,7 +799,7 @@ void AddLead2(){
 }
 void SubLead2(){
     SREC temp;
-    gotoxy(66,8);printf("Subtraction level 2");
+    gotoxy(66,8);printf("Subtraction");
     //checking every single player and sort in descending order according to the subtraction score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -804,7 +826,7 @@ void SubLead2(){
 }
 void DivLead2(){
     SREC temp;
-    gotoxy(66,19);printf("Division level 2");
+    gotoxy(66,19);printf("Division");
     //checking every single player and sort in descending order according to the division score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -831,7 +853,7 @@ void DivLead2(){
 }
 void MulLead2(){
     SREC temp;
-    gotoxy(23,19);printf("Multiplication level 2");
+    gotoxy(23,19);printf("Multiplication");
     //checking every single player and sort in descending order according to the multiplication score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -859,7 +881,7 @@ void MulLead2(){
 
 void AllLead3(){
     SREC temp;
-    gotoxy(23,19);printf("Level 3 Overall Rankings\n");
+    gotoxy(23,19);printf("Level 3 Overall Rankings");
     //checking every single player and sort in descending order according to the average
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -884,7 +906,7 @@ void AllLead3(){
 }
 void AddLead3(){
     SREC temp;
-    gotoxy(26,8);printf("Addition level 3");
+    gotoxy(26,8);printf("Addition");
     //checking every single player and sort in descending order according to the addition score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -911,7 +933,7 @@ void AddLead3(){
 }
 void SubLead3(){
     SREC temp;
-    gotoxy(66,8);printf("Subtraction level 3");
+    gotoxy(66,8);printf("Subtraction");
     //checking every single player and sort in descending order according to the subtraction score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -938,7 +960,7 @@ void SubLead3(){
 }
 void DivLead3(){
     SREC temp;
-    gotoxy(66,19);printf("Division level 3");
+    gotoxy(66,19);printf("Division");
     //checking every single player and sort in descending order according to the division score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -965,7 +987,7 @@ void DivLead3(){
 }
 void MulLead3(){
     SREC temp;
-    gotoxy(23,19);printf("Multiplication level 3");
+    gotoxy(23,19);printf("Multiplication");
     //checking every single player and sort in descending order according to the multiplication score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -993,7 +1015,7 @@ void MulLead3(){
 
 void AllLead4(){
     SREC temp;
-    gotoxy(66,19);printf("Level 4 Overall Rankings\n");
+    gotoxy(66,19);printf("Level 4 Overall Rankings");
     //checking every single player and sort in descending order according to the average
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -1018,7 +1040,7 @@ void AllLead4(){
 }
 void AddLead4(){
     SREC temp;
-    gotoxy(26,8);printf("Addition level 4");
+    gotoxy(26,8);printf("Addition");
     //checking every single player and sort in descending order according to the addition score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -1045,7 +1067,7 @@ void AddLead4(){
 }
 void SubLead4(){
     SREC temp;
-    gotoxy(66,8);printf("Subtraction level 4");
+    gotoxy(66,8);printf("Subtraction");
     //checking every single player and sort in descending order according to the subtraction score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -1072,7 +1094,7 @@ void SubLead4(){
 }
 void DivLead4(){
     SREC temp;
-    gotoxy(66,19);printf("Division level 4");
+    gotoxy(66,19);printf("Division");
     //checking every single player and sort in descending order according to the division score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -1099,7 +1121,7 @@ void DivLead4(){
 }
 void MulLead4(){
     SREC temp;
-    gotoxy(23,19);printf("Multiplication level 4");
+    gotoxy(23,19);printf("Multiplication");
     //checking every single player and sort in descending order according to the multiplication score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -1152,7 +1174,7 @@ void AllLead5(){
 }
 void AddLead5(){
     SREC temp;
-    gotoxy(26,8);printf("Addition level 5");
+    gotoxy(26,8);printf("Addition");
     //checking every single player and sort in descending order according to the addition score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -1179,7 +1201,7 @@ void AddLead5(){
 }
 void SubLead5(){
     SREC temp;
-    gotoxy(66,8);printf("Subtraction level 5");
+    gotoxy(66,8);printf("Subtraction");
     //checking every single player and sort in descending order according to the subtraction score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -1206,7 +1228,7 @@ void SubLead5(){
 }
 void DivLead5(){
     SREC temp;
-    gotoxy(66,19);printf("Division level 5");
+    gotoxy(66,19);printf("Division");
     //checking every single player and sort in descending order according to the division score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
@@ -1233,7 +1255,7 @@ void DivLead5(){
 }
 void MulLead5(){
     SREC temp;
-    gotoxy(23,19);printf("Multiplication level 5");
+    gotoxy(23,19);printf("Multiplication");
     //checking every single player and sort in descending order according to the multiplication score
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
