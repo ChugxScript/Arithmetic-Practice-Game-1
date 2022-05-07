@@ -54,8 +54,8 @@ void gotoxy(int x,int y){
 int items=10,counter,num,marker,level,start;
 char c;
 
-int main(){
-    srand(time(NULL));
+int main(){ //calling the functinos
+    srand(time(NULL)); //to prevent same problems
     init();
     retrieve();
     logIn();
@@ -85,10 +85,10 @@ int main(){
 }
 
 void init(){
-    marker = -1;
+    marker = -1; //initialize the value of marker to -1
 }
 
-void box(){
+void box(){ //box display using ascii value in log in
     int i;
     int l = 186, ul=201,ur=187,w=205,dr=188,dl=200;
     gotoxy(40,5);printf("%c", ul);
@@ -104,7 +104,7 @@ void box(){
         gotoxy(41+i,13);printf("%c", w);
     }
 }
-void smallbox(){
+void smallbox(){ //box display using ascii value in the problems
     int i;
     int l = 186, ul=201,ur=187,w=205,dr=188,dl=200;
     gotoxy(33,4);printf("%c", ul);
@@ -125,20 +125,19 @@ void logIn(){
     SREC player;
     system("cls");
     box();
-    gotoxy(45,6);printf("Enter Username/UserID: ");
+    gotoxy(45,6);printf("Enter Username/UserID: "); //prompt the user's username/ID
     scanf(" %[^\n]s", player.name);
-    //check if name is already in the list
-    int l = locate(player.name);
+    int l = locate(player.name); //check if name is already in the list
     if(l > -1){
             here:
             system("cls");
             box();
-            gotoxy(45,6);printf("Welcome back, %s!", player.name);
+            gotoxy(45,6);printf("Welcome back, %s!", player.name); //prompt the player's password
             gotoxy(45,7);printf("Enter Password: ");
             scanf(" %[^\n]s", player.pass);
             //check if password is correct
             for(int x=0;x<=marker;x++){
-                if (strcmp(player.pass,PLAYER[x].pass)==0){
+                if (strcmp(player.pass,PLAYER[x].pass)==0){ //check if in the array structure if correct proceed to next part
                     gotoxy(45,9);system("pause");break;
                 }else{
                     gotoxy(45,9);printf("Wrong password.");
@@ -146,16 +145,15 @@ void logIn(){
                     goto here; //goto here is responsible to loop if wrong password
                 }
             }
-        }else{
-            //will create new account if not in the list
+        }else{ //will create new account if not in the list
             marker++;
             strcpy(PLAYER[marker].name,player.name);
             system("cls");
             box();
             gotoxy(45,6);printf("A NEW CHALLENGER!");
-            gotoxy(45,7);printf("Enter Password: ");
+            gotoxy(45,7);printf("Enter Password: "); //prompt the nue player's password
             scanf(" %[^\n]s", player.pass);
-            strcpy (PLAYER[marker].pass,player.pass);
+            strcpy (PLAYER[marker].pass,player.pass); //copy the entered password to the array structure
             gotoxy(45,12);system("pause");
         }
 }
@@ -166,13 +164,13 @@ void AddRec(SREC pl){
         printf("Array is Full");
         system("\npause");
     }else{
-        //will add the record in the file
+        //will add the record from the file to the array structure
         marker++;
         PLAYER[marker]=pl;
     }
 }
 
-int locate(char n[69]){
+int locate(char n[69]){ //locate username input to the array structure
     for(int x=0;x<=marker;x++)
         if (strcmp(n,PLAYER[x].name)==0)
             return x;
@@ -204,8 +202,7 @@ void TitleScreen(){
         {"                                                                                                  "},
         {"##################################################################################################"}
     };
-    // for looop for printing the title screen
-    for (int x=0; x<21; x++)
+    for (int x=0; x<21; x++) // for looop for printing the title screen
     {
         printf("\t");
         for (int y=0; y<98; y++)
@@ -219,7 +216,7 @@ void TitleScreen(){
     system("cls");
 }
 
-int menu(){
+int menu(){ //options
     system("cls");
     gotoxy(45,3);printf("Arithmetic Practice Game");
     gotoxy(40,6);printf("============= MENU ==============");
@@ -237,17 +234,16 @@ int menu(){
 void addition (){
     int x,y,z,answer,ul=196;
     GetLevel();
-    //do while loop if the player wants to try again
-    do{
+    do{ //do while loop if the player wants to try again
         counter = 0;
         for (x=0;x<items;x++){
             system("cls");
-            //generate random numbers from 1 - level
+            //generate random numbers from start - level
             y = rand() % level + start;
             z = rand() % level + start;
             score();
             smallbox();
-            for(int i=0;i<7;i++){
+            for(int i=0;i<7;i++){ //displaying box
                 gotoxy(38+i,7);printf("%c",ul);
             }
             gotoxy(35,3);printf("Problem #%d",x+1);
@@ -263,7 +259,7 @@ void addition (){
             gotoxy(33,14);system("pause");
         }
         system("cls");
-        if(level == 10){
+        if(level == 10){ //will store the score acording to the level
             PLAYER[marker].plus = counter;
         }else if(level == 20){
             PLAYER[marker].plus2 = counter;
@@ -293,26 +289,25 @@ void addition (){
 void subtraction (){
     int x,y,z,answer,temp,ul=196;
     GetLevel();
-    //do while loop if the player wants to try again
-    do{
+    do{ //do while loop if the player wants to try again
         counter = 0;
         for (x=0;x<items;x++){
             system("cls");
-            //generate random numbers from 1 - items
+            //generate random numbers from start to level
             y = rand() % level + start;
             z = rand() % level + start;
             score();
             smallbox();
             gotoxy(35,3);printf("Problem #%d",x+1);
-            for(int i=0;i<7;i++){
+            for(int i=0;i<7;i++){ //display the box
                 gotoxy(38+i,7);printf("%c",ul);
             }
+            //if y is less than z, switch to z - y to have no negative answer
             if (y>z){
                 temp=y-z;
                 gotoxy(40,5);printf("  %d ",y);
                 gotoxy(40,6);printf("- %d ",z);
             }
-            //if Random number 1 is less than random number 2, switch random number 2 so there is no negative answer
             else {
                 temp=z-y;
                 gotoxy(40,5);printf("  %d ",z);
@@ -328,7 +323,7 @@ void subtraction (){
             gotoxy(33,14);system("pause");
         }
         system("cls");
-        if(level == 10){
+        if(level == 10){ //will store the score acording to the level
             PLAYER[marker].minus = counter;
         }else if(level == 20){
             PLAYER[marker].minus2 = counter;
@@ -358,12 +353,11 @@ void subtraction (){
 void division (){
     int x,y,z,answer,temp,ul=196,s=246;
     GetLevel();
-    //do while loop if the player wants to try again
-    do{
+    do{ //do while loop if the player wants to try again
         counter = 0;
         for (x=0;x<items;x++){
             system("cls");
-            //generate random numbers from 1 - items
+            //generate random numbers from start to level
             y = rand() % level + start;
             z = rand() % level + start;
             score();
@@ -372,8 +366,7 @@ void division (){
             for(int i=0;i<7;i++){
                 gotoxy(38+i,7);printf("%c",ul);
             }
-            //to have divisible numbers
-            temp = y*z;
+            temp = y*z; //to have divisible numbers
             y = temp;
             gotoxy(40,5);printf("  %d",y);
             gotoxy(40,6);printf("%c %d ",s,z);
@@ -387,7 +380,7 @@ void division (){
             gotoxy(33,14);system("pause");
         }
         system("cls");
-        if(level == 10){
+        if(level == 10){ //will store the score acording to the level
             PLAYER[marker].divide = counter;
         }else if(level == 20){
             PLAYER[marker].divide2 = counter;
@@ -417,12 +410,11 @@ void division (){
 void multiplication (){
     int x,y,z,answer,ul=196;
     GetLevel();
-    //do while loop if the player wants to try again
-    do{
+    do{ //do while loop if the player wants to try again
         counter = 0;
         for (x=0;x<items;x++){
             system("cls");
-            //generate random numbers from 1 - level
+            //generate random numbers from start to level
             y = rand() % level + start;
             z = rand() % level + start;
             score();
@@ -443,7 +435,7 @@ void multiplication (){
             gotoxy(33,14);system("pause");
         }
         system("cls");
-        if(level == 10){
+        if(level == 10){ //will store the score acording to the level
             PLAYER[marker].multiply = counter;
         }else if(level == 20){
             PLAYER[marker].multiply2 = counter;
@@ -470,11 +462,11 @@ void multiplication (){
         }
 }
 
-void score(){
+void score(){ //display updated score
     gotoxy(90,2);printf("Score: %d/%d: %6.2f%%",counter,items,(float)counter/items*100);
 }
 
-void GetLevel(){
+void GetLevel(){ //assign the value of start and level according to chosen difficulty
     int l;
     system("cls");
     gotoxy(40,5);printf("Select level");
@@ -500,7 +492,7 @@ void GetLevel(){
     }
 }
 
-void save(){
+void save(){ //will save the data from array structure to the txt file
     FILE *fp;
     int x;
     fp = fopen("BSCS-1CD-Leaderboard.txt","w+");
@@ -520,7 +512,7 @@ void save(){
       }
 }
 
-void retrieve(){
+void retrieve(){ //will scan the txt file
     FILE *fp;
     SREC players;
     fp = fopen("BSCS-1CD-Leaderboard.txt","r+");
@@ -549,8 +541,7 @@ void retrieve(){
 void leaderboard(){
     int i;
     system("cls");
-    //calculate the value of average of every player
-    for (i=0;i<=marker;i++){
+    for (i=0;i<=marker;i++){ //assigning the value of average of every player per level
         PLAYER[i].ave = (PLAYER[i].plus + PLAYER[i].minus + PLAYER[i].divide + PLAYER[i].multiply) / 4.0;
         PLAYER[i].ave2 = (PLAYER[i].plus2 + PLAYER[i].minus2 + PLAYER[i].divide2 + PLAYER[i].multiply2) / 4.0;
         PLAYER[i].ave3 = (PLAYER[i].plus3 + PLAYER[i].minus3 + PLAYER[i].divide3 + PLAYER[i].multiply3) / 4.0;
@@ -613,7 +604,7 @@ void leaderboard(){
     system("cls");
 }
 void AllLead(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(26,8);printf("Level 1 Overall Rankings");
     //checking every single player and sort in descending order according to the average
     for(int x=0;x<=marker;x++){
@@ -625,6 +616,7 @@ void AllLead(){
             }
         }
     }
+    //will print "DATA UNAVAILABLE" if doesn't have a score yet in every operation
     for(int z=0;z<=marker;z++){
         if(PLAYER[z].plus==NULL||PLAYER[z].minus==NULL||PLAYER[z].multiply==NULL||PLAYER[z].divide==NULL){
             gotoxy(19,9);printf("  PLAYER\t  AVERAGE SCORE(%%)");
@@ -638,7 +630,7 @@ void AllLead(){
     }
 }
 void AddLead(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(26,8);printf("Addition");
     //checking every single player and sort in descending order according to the addition score
     for(int x=0;x<=marker;x++){
@@ -665,7 +657,7 @@ void AddLead(){
     }
 }
 void SubLead(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(66,8);printf("Subtraction");
     //checking every single player and sort in descending order according to the subtraction score
     for(int x=0;x<=marker;x++){
@@ -692,7 +684,7 @@ void SubLead(){
     }
 }
 void DivLead(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(66,19);printf("Division");
     //checking every single player and sort in descending order according to the division score
     for(int x=0;x<=marker;x++){
@@ -719,7 +711,7 @@ void DivLead(){
     }
 }
 void MulLead(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(23,19);printf("Multiplication");
     //checking every single player and sort in descending order according to the multiplication score
     for(int x=0;x<=marker;x++){
@@ -746,9 +738,9 @@ void MulLead(){
     }
 }
 void AllLead2(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(66,8);printf("Level 2 Overall Rankings\n");
-    //checking every single player and sort in descending order according to the average
+    //checking every single player and sort in descending order according to the average in level 2
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].ave2 < PLAYER[y+1].ave2){
@@ -771,9 +763,9 @@ void AllLead2(){
     }
 }
 void AddLead2(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(26,8);printf("Addition");
-    //checking every single player and sort in descending order according to the addition score
+    //checking every single player and sort in descending order according to the addition score in level 2
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].plus2 < PLAYER[y+1].plus2){
@@ -798,9 +790,9 @@ void AddLead2(){
     }
 }
 void SubLead2(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(66,8);printf("Subtraction");
-    //checking every single player and sort in descending order according to the subtraction score
+    //checking every single player and sort in descending order according to the subtraction score in level  2
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].minus2 < PLAYER[y+1].minus2){
@@ -825,9 +817,9 @@ void SubLead2(){
     }
 }
 void DivLead2(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(66,19);printf("Division");
-    //checking every single player and sort in descending order according to the division score
+    //checking every single player and sort in descending order according to the division score in level 2
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].divide2 < PLAYER[y+1].divide2){
@@ -852,9 +844,9 @@ void DivLead2(){
     }
 }
 void MulLead2(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(23,19);printf("Multiplication");
-    //checking every single player and sort in descending order according to the multiplication score
+    //checking every single player and sort in descending order according to the multiplication score in level 2
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].multiply2 < PLAYER[y+1].multiply2){
@@ -880,9 +872,9 @@ void MulLead2(){
 }
 
 void AllLead3(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(23,19);printf("Level 3 Overall Rankings");
-    //checking every single player and sort in descending order according to the average
+    //checking every single player and sort in descending order according to the average in level 3
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].ave3 < PLAYER[y+1].ave3){
@@ -905,9 +897,9 @@ void AllLead3(){
     }
 }
 void AddLead3(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(26,8);printf("Addition");
-    //checking every single player and sort in descending order according to the addition score
+    //checking every single player and sort in descending order according to the addition score in level 3
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].plus3 < PLAYER[y+1].plus3){
@@ -932,9 +924,9 @@ void AddLead3(){
     }
 }
 void SubLead3(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(66,8);printf("Subtraction");
-    //checking every single player and sort in descending order according to the subtraction score
+    //checking every single player and sort in descending order according to the subtraction score in level 3
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].minus3 < PLAYER[y+1].minus3){
@@ -959,9 +951,9 @@ void SubLead3(){
     }
 }
 void DivLead3(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(66,19);printf("Division");
-    //checking every single player and sort in descending order according to the division score
+    //checking every single player and sort in descending order according to the division score in level 3
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].divide3 < PLAYER[y+1].divide3){
@@ -986,9 +978,9 @@ void DivLead3(){
     }
 }
 void MulLead3(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(23,19);printf("Multiplication");
-    //checking every single player and sort in descending order according to the multiplication score
+    //checking every single player and sort in descending order according to the multiplication score in level 3
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].multiply3 < PLAYER[y+1].multiply3){
@@ -1014,9 +1006,9 @@ void MulLead3(){
 }
 
 void AllLead4(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(66,19);printf("Level 4 Overall Rankings");
-    //checking every single player and sort in descending order according to the average
+    //checking every single player and sort in descending order according to the average in level 4
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].ave4 < PLAYER[y+1].ave4){
@@ -1039,9 +1031,9 @@ void AllLead4(){
     }
 }
 void AddLead4(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(26,8);printf("Addition");
-    //checking every single player and sort in descending order according to the addition score
+    //checking every single player and sort in descending order according to the addition score in level 4
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].plus4 < PLAYER[y+1].plus4){
@@ -1066,9 +1058,9 @@ void AddLead4(){
     }
 }
 void SubLead4(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(66,8);printf("Subtraction");
-    //checking every single player and sort in descending order according to the subtraction score
+    //checking every single player and sort in descending order according to the subtraction score in level 4
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].minus4 < PLAYER[y+1].minus4){
@@ -1093,9 +1085,9 @@ void SubLead4(){
     }
 }
 void DivLead4(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(66,19);printf("Division");
-    //checking every single player and sort in descending order according to the division score
+    //checking every single player and sort in descending order according to the division score in level 4
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].divide4 < PLAYER[y+1].divide4){
@@ -1120,9 +1112,9 @@ void DivLead4(){
     }
 }
 void MulLead4(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(23,19);printf("Multiplication");
-    //checking every single player and sort in descending order according to the multiplication score
+    //checking every single player and sort in descending order according to the multiplication score in level 4
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].multiply4 < PLAYER[y+1].multiply4){
@@ -1148,9 +1140,9 @@ void MulLead4(){
 }
 
 void AllLead5(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(48,31);printf("Level 5 Overall Rankings");
-    //checking every single player and sort in descending order according to the average
+    //checking every single player and sort in descending order according to the average in level 5
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].ave5 < PLAYER[y+1].ave5){
@@ -1173,9 +1165,9 @@ void AllLead5(){
     }
 }
 void AddLead5(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(26,8);printf("Addition");
-    //checking every single player and sort in descending order according to the addition score
+    //checking every single player and sort in descending order according to the addition score in level 5
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].plus5 < PLAYER[y+1].plus5){
@@ -1200,9 +1192,9 @@ void AddLead5(){
     }
 }
 void SubLead5(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(66,8);printf("Subtraction");
-    //checking every single player and sort in descending order according to the subtraction score
+    //checking every single player and sort in descending order according to the subtraction score in level 5
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].minus5 < PLAYER[y+1].minus5){
@@ -1227,9 +1219,9 @@ void SubLead5(){
     }
 }
 void DivLead5(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(66,19);printf("Division");
-    //checking every single player and sort in descending order according to the division score
+    //checking every single player and sort in descending order according to the division score in level 5
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].divide5 < PLAYER[y+1].divide5){
@@ -1254,9 +1246,9 @@ void DivLead5(){
     }
 }
 void MulLead5(){
-    SREC temp;
+    SREC temp; //teporarily store the value of array structure
     gotoxy(23,19);printf("Multiplication");
-    //checking every single player and sort in descending order according to the multiplication score
+    //checking every single player and sort in descending order according to the multiplication score in level 5
     for(int x=0;x<=marker;x++){
         for(int y=0;y<marker;y++){
             if (PLAYER[y].multiply5 < PLAYER[y+1].multiply5){
