@@ -151,23 +151,11 @@ void logIn(){
             system("cls");
             box();
             gotoxy(45,6);printf("A NEW CHALLENGER!");
-            gotoxy(45,7);printf("Enter Password: "); //prompt the nue player's password
+            gotoxy(45,7);printf("Enter Password: "); //prompt the new player's password
             scanf(" %[^\n]s", player.pass);
             strcpy (PLAYER[marker].pass,player.pass); //copy the entered password to the array structure
             gotoxy(45,12);system("pause");
         }
-}
-
-void AddRec(SREC pl){
-    //check if array is full
-    if (marker == MAX-1){
-        printf("Array is Full");
-        system("\npause");
-    }else{
-        //will add the record from the file to the array structure
-        marker++;
-        PLAYER[marker]=pl;
-    }
 }
 
 int locate(char n[69]){ //locate username input to the array structure
@@ -233,7 +221,7 @@ int menu(){ //options
 
 void addition (){
     int x,y,z,answer,ul=196;
-    GetLevel();
+    GetLevel(); // get the value of start and level
     do{ //do while loop if the player wants to try again
         counter = 0;
         for (x=0;x<items;x++){
@@ -536,6 +524,17 @@ void retrieve(){ //will scan the txt file
         }
         fclose(fp);
    }
+}
+void AddRec(SREC pl){
+    //check if array is full
+    if (marker == MAX-1){
+        printf("Array is Full");
+        system("\npause");
+    }else{
+        //will add the record from the file to the array structure
+        marker++;
+        PLAYER[marker]=pl;
+    }
 }
 
 void leaderboard(){
