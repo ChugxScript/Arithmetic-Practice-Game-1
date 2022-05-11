@@ -154,7 +154,7 @@ void logIn(){
             gotoxy(45,7);printf("Enter Password: "); //prompt the new player's password
             scanf(" %[^\n]s", player.pass);
             strcpy (PLAYER[marker].pass,player.pass); //copy the entered password to the array structure
-            gotoxy(45,12);system("pause");
+            gotoxy(45,12);marker2=marker;system("pause");
         }
 }
 
@@ -317,7 +317,7 @@ void subtraction (){
         }else if(level == 50){
             PLAYER[marker2].minus3 = counter;
         }else if(level == 80){
-            PLAYER[marker].minus4 = counter;
+            PLAYER[marker2].minus4 = counter;
         }else if(level == 100){
             PLAYER[marker2].minus5 = counter;
         }
