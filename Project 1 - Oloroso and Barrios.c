@@ -51,7 +51,7 @@ void gotoxy(int x,int y){
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),coord);
 }
 //Global Variables
-int items=10,counter,num,marker,level,start;
+int items=10,counter,num,marker,marker2,level,start;
 char c;
 
 int main(){ //calling the functinos
@@ -138,7 +138,7 @@ void logIn(){
             //check if password is correct
             for(int x=0;x<=marker;x++){
                 if (strcmp(player.pass,PLAYER[x].pass)==0){ //check if in the array structure if correct proceed to next part
-                    gotoxy(45,9);system("pause");break;
+                    gotoxy(45,9);system("pause");marker2=l;break;
                 }else{
                     gotoxy(45,9);printf("Wrong password.");
                     gotoxy(45,11);system("pause");
@@ -224,7 +224,7 @@ void addition (){
     GetLevel(); // get the value of start and level
     do{ //do while loop if the player wants to try again
         counter = 0;
-        for (x=0;x<items;x++){
+        for (x=0;x<items;x++){ //number of items
             system("cls");
             //generate random numbers from start - level
             y = rand() % level + start;
@@ -248,15 +248,15 @@ void addition (){
         }
         system("cls");
         if(level == 10){ //will store the score acording to the level
-            PLAYER[marker].plus = counter;
+            PLAYER[marker2].plus = counter;
         }else if(level == 20){
-            PLAYER[marker].plus2 = counter;
+            PLAYER[marker2].plus2 = counter;
         }else if(level == 50){
-            PLAYER[marker].plus3 = counter;
+            PLAYER[marker2].plus3 = counter;
         }else if(level == 80){
-            PLAYER[marker].plus4 = counter;
+            PLAYER[marker2].plus4 = counter;
         }else if(level == 100){
-            PLAYER[marker].plus5 = counter;
+            PLAYER[marker2].plus5 = counter;
         }
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
@@ -290,13 +290,12 @@ void subtraction (){
             for(int i=0;i<7;i++){ //display the box
                 gotoxy(38+i,7);printf("%c",ul);
             }
-            //if y is less than z, switch to z - y to have no negative answer
             if (y>z){
                 temp=y-z;
                 gotoxy(40,5);printf("  %d ",y);
                 gotoxy(40,6);printf("- %d ",z);
             }
-            else {
+            else { //to have no negative answer switch to z - y
                 temp=z-y;
                 gotoxy(40,5);printf("  %d ",z);
                 gotoxy(40,6);printf("- %d ",y);
@@ -312,15 +311,15 @@ void subtraction (){
         }
         system("cls");
         if(level == 10){ //will store the score acording to the level
-            PLAYER[marker].minus = counter;
+            PLAYER[marker2].minus = counter;
         }else if(level == 20){
-            PLAYER[marker].minus2 = counter;
+            PLAYER[marker2].minus2 = counter;
         }else if(level == 50){
-            PLAYER[marker].minus3 = counter;
+            PLAYER[marker2].minus3 = counter;
         }else if(level == 80){
             PLAYER[marker].minus4 = counter;
         }else if(level == 100){
-            PLAYER[marker].minus5 = counter;
+            PLAYER[marker2].minus5 = counter;
         }
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
@@ -369,15 +368,15 @@ void division (){
         }
         system("cls");
         if(level == 10){ //will store the score acording to the level
-            PLAYER[marker].divide = counter;
+            PLAYER[marker2].divide = counter;
         }else if(level == 20){
-            PLAYER[marker].divide2 = counter;
+            PLAYER[marker2].divide2 = counter;
         }else if(level == 50){
-            PLAYER[marker].divide3 = counter;
+            PLAYER[marker2].divide3 = counter;
         }else if(level == 80){
-            PLAYER[marker].divide4 = counter;
+            PLAYER[marker2].divide4 = counter;
         }else if(level == 100){
-            PLAYER[marker].divide5 = counter;
+            PLAYER[marker2].divide5 = counter;
         }
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
@@ -424,15 +423,15 @@ void multiplication (){
         }
         system("cls");
         if(level == 10){ //will store the score acording to the level
-            PLAYER[marker].multiply = counter;
+            PLAYER[marker2].multiply = counter;
         }else if(level == 20){
-            PLAYER[marker].multiply2 = counter;
+            PLAYER[marker2].multiply2 = counter;
         }else if(level == 50){
-            PLAYER[marker].multiply3 = counter;
+            PLAYER[marker2].multiply3 = counter;
         }else if(level == 80){
-            PLAYER[marker].multiply4 = counter;
+            PLAYER[marker2].multiply4 = counter;
         }else if(level == 100){
-            PLAYER[marker].multiply5 = counter;
+            PLAYER[marker2].multiply5 = counter;
         }
         gotoxy(40,7);printf("Do you want to use this operation again? ");
         gotoxy(45,8);printf(" [Y] if Yes. [N] if No.");
