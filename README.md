@@ -1,7 +1,7 @@
 ![arithmetic banner](https://user-images.githubusercontent.com/101156843/235081467-bfb85106-7020-4f2e-8e64-7874e81d1947.png)
 
 > # **Arithmetic Practice Game in C using Array of Structure**
-> 1st Year - 1st Sem Project 1 in Computer Programming [BSCS-1CD-M]
+> 1st Year - 1st Sem Project 1 in Computer Programming 1 [BSCS-1CD-M]
 
 ## FEATURES
 - Log-In
